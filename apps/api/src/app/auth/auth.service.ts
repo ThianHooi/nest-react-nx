@@ -8,7 +8,7 @@ import { LoginUserInput } from './login-input.dto';
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -24,18 +24,22 @@ export class AuthService {
 
   async login(loginUserInput: LoginUserInput): Promise<any> {
     const user = await this.userService.findOneUserByEmail(
-      loginUserInput.email,
+      loginUserInput.email
     );
 
     const isPasswordMatch = await bcrypt.compare(
       loginUserInput.password,
-      user.password,
+      user.password
     );
 
     if (user && isPasswordMatch) {
       const { password, ...result } = user;
       return {
-        access_token: this.jwtService.sign({ name: user.name, sub: user.id }),
+        access_token: this.jwtService.sign({
+          name: user.name,
+          sub: user.id,
+          role: user.role,
+        }),
         user: result,
       };
     }
