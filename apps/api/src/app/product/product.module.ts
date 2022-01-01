@@ -7,16 +7,21 @@ import { OrderEntity } from '../order/order.entity';
 import { ProductDto } from './product.dto';
 import { ProductEntity } from './product.entity';
 
+const guards = [JwtAuthGuard];
+
 @Module({
   imports: [
     NestjsQueryGraphQLModule.forFeature({
-      imports: [NestjsQueryTypeOrmModule.forFeature([ProductEntity, OrderEntity])],
+      imports: [
+        NestjsQueryTypeOrmModule.forFeature([ProductEntity, OrderEntity]),
+      ],
 
       resolvers: [
         {
           DTOClass: ProductDto,
           EntityClass: ProductEntity,
-          guards: [JwtAuthGuard],
+          create: { guards },
+          update: { guards },
         },
       ],
     }),
