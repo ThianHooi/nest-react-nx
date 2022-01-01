@@ -1,0 +1,1054 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  id: ID!
+  name: String!
+  type: String!
+  description: String!
+  price: Float!
+  isAvailable: Boolean!
+  imageUrl: String!
+  user: User!
+  created: DateTime!
+  updated: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: ID!
+  name: String!
+  role: String!
+  email: String!
+  created: DateTime!
+  updated: DateTime!
+  products(
+    """Specify to filter the records returned."""
+    filter: ProductFilter = {}
+
+    """Specify to sort results."""
+    sorting: [ProductSort!] = []
+  ): [Product!]!
+}
+
+input ProductFilter {
+  and: [ProductFilter!]
+  or: [ProductFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  type: StringFieldComparison
+  description: StringFieldComparison
+  price: NumberFieldComparison
+  isAvailable: BooleanFieldComparison
+  imageUrl: StringFieldComparison
+  user: NumberFieldComparison
+}
+
+input IDFilterComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: ID
+  neq: ID
+  gt: ID
+  gte: ID
+  lt: ID
+  lte: ID
+  like: ID
+  notLike: ID
+  iLike: ID
+  notILike: ID
+  in: [ID!]
+  notIn: [ID!]
+}
+
+input StringFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: String
+  neq: String
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  like: String
+  notLike: String
+  iLike: String
+  notILike: String
+  in: [String!]
+  notIn: [String!]
+}
+
+input NumberFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: Float
+  neq: Float
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  in: [Float!]
+  notIn: [Float!]
+  between: NumberFieldComparisonBetween
+  notBetween: NumberFieldComparisonBetween
+}
+
+input NumberFieldComparisonBetween {
+  lower: Float!
+  upper: Float!
+}
+
+input BooleanFieldComparison {
+  is: Boolean
+  isNot: Boolean
+}
+
+input ProductSort {
+  field: ProductSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum ProductSortFields {
+  id
+  name
+  type
+  description
+  price
+  isAvailable
+  imageUrl
+  user
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+type UserDeleteResponse {
+  id: ID
+  name: String
+  role: String
+  email: String
+  created: DateTime
+  updated: DateTime
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+type UserEdge {
+  """The node containing the User"""
+  node: User!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+type PageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
+
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+}
+
+type UserConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [UserEdge!]!
+}
+
+type UserAggregateGroupBy {
+  id: ID
+  name: String
+  role: String
+  email: String
+}
+
+type UserCountAggregate {
+  id: Int
+  name: Int
+  role: Int
+  email: Int
+}
+
+type UserSumAggregate {
+  id: Float
+}
+
+type UserAvgAggregate {
+  id: Float
+}
+
+type UserMinAggregate {
+  id: ID
+  name: String
+  role: String
+  email: String
+}
+
+type UserMaxAggregate {
+  id: ID
+  name: String
+  role: String
+  email: String
+}
+
+type LoginResponse {
+  access_token: String!
+  user: User!
+}
+
+type ProductDeleteResponse {
+  id: ID
+  name: String
+  type: String
+  description: String
+  price: Float
+  isAvailable: Boolean
+  imageUrl: String
+  user: Float
+  created: DateTime
+  updated: DateTime
+}
+
+type ProductEdge {
+  """The node containing the Product"""
+  node: Product!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type ProductConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [ProductEdge!]!
+}
+
+type ProductAggregateGroupBy {
+  id: ID
+  name: String
+  type: String
+  description: String
+  price: Float
+  isAvailable: Boolean
+  imageUrl: String
+  user: Float
+}
+
+type ProductCountAggregate {
+  id: Int
+  name: Int
+  type: Int
+  description: Int
+  price: Int
+  isAvailable: Int
+  imageUrl: Int
+  user: Int
+}
+
+type ProductSumAggregate {
+  id: Float
+  price: Float
+  user: Float
+}
+
+type ProductAvgAggregate {
+  id: Float
+  price: Float
+  user: Float
+}
+
+type ProductMinAggregate {
+  id: ID
+  name: String
+  type: String
+  description: String
+  price: Float
+  imageUrl: String
+  user: Float
+}
+
+type ProductMaxAggregate {
+  id: ID
+  name: String
+  type: String
+  description: String
+  price: Float
+  imageUrl: String
+  user: Float
+}
+
+type Order {
+  id: ID!
+  status: String!
+  user: User!
+  price: Float!
+  created: DateTime!
+  updated: DateTime!
+  orderProducts(
+    """Specify to filter the records returned."""
+    filter: OrderProductFilter = {}
+
+    """Specify to sort results."""
+    sorting: [OrderProductSort!] = []
+  ): [OrderProduct!]!
+}
+
+input OrderProductFilter {
+  and: [OrderProductFilter!]
+  or: [OrderProductFilter!]
+  id: IDFilterComparison
+  quantity: NumberFieldComparison
+  unitPrice: NumberFieldComparison
+  totalPrice: NumberFieldComparison
+  productId: NumberFieldComparison
+  orderId: NumberFieldComparison
+}
+
+input OrderProductSort {
+  field: OrderProductSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum OrderProductSortFields {
+  id
+  quantity
+  unitPrice
+  totalPrice
+  productId
+  orderId
+}
+
+type OrderProduct {
+  id: ID!
+  quantity: Float!
+  unitPrice: Float!
+  totalPrice: Float!
+  productId: Product!
+  orderId: Order!
+  created: DateTime!
+  updated: DateTime!
+}
+
+type OrderProductDeleteResponse {
+  id: ID
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+  created: DateTime
+  updated: DateTime
+}
+
+type OrderProductEdge {
+  """The node containing the OrderProduct"""
+  node: OrderProduct!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type OrderProductConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [OrderProductEdge!]!
+}
+
+type OrderProductAggregateGroupBy {
+  id: ID
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+}
+
+type OrderProductCountAggregate {
+  id: Int
+  quantity: Int
+  unitPrice: Int
+  totalPrice: Int
+  productId: Int
+  orderId: Int
+}
+
+type OrderProductSumAggregate {
+  id: Float
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+}
+
+type OrderProductAvgAggregate {
+  id: Float
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+}
+
+type OrderProductMinAggregate {
+  id: ID
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+}
+
+type OrderProductMaxAggregate {
+  id: ID
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+}
+
+type OrderProductAggregateResponse {
+  groupBy: OrderProductAggregateGroupBy
+  count: OrderProductCountAggregate
+  sum: OrderProductSumAggregate
+  avg: OrderProductAvgAggregate
+  min: OrderProductMinAggregate
+  max: OrderProductMaxAggregate
+}
+
+type OrderDeleteResponse {
+  id: ID
+  status: String
+  user: Float
+  price: Float
+  created: DateTime
+  updated: DateTime
+}
+
+type OrderEdge {
+  """The node containing the Order"""
+  node: Order!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type OrderConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [OrderEdge!]!
+}
+
+type OrderAggregateGroupBy {
+  id: ID
+  status: String
+  user: Float
+}
+
+type OrderCountAggregate {
+  id: Int
+  status: Int
+  user: Int
+}
+
+type OrderSumAggregate {
+  id: Float
+  user: Float
+}
+
+type OrderAvgAggregate {
+  id: Float
+  user: Float
+}
+
+type OrderMinAggregate {
+  id: ID
+  status: String
+  user: Float
+}
+
+type OrderMaxAggregate {
+  id: ID
+  status: String
+  user: Float
+}
+
+type Query {
+  user(
+    """The id of the record to find."""
+    id: ID!
+  ): User
+  users(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: UserFilter = {}
+
+    """Specify to sort results."""
+    sorting: [UserSort!] = []
+  ): UserConnection!
+  product(
+    """The id of the record to find."""
+    id: ID!
+  ): Product
+  products(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: ProductFilter = {}
+
+    """Specify to sort results."""
+    sorting: [ProductSort!] = []
+  ): ProductConnection!
+  order(
+    """The id of the record to find."""
+    id: ID!
+  ): Order
+  orders(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: OrderFilter = {}
+
+    """Specify to sort results."""
+    sorting: [OrderSort!] = []
+  ): OrderConnection!
+  orderProductAggregate(
+    """Filter to find records to aggregate on"""
+    filter: OrderProductAggregateFilter
+  ): [OrderProductAggregateResponse!]!
+  orderProduct(
+    """The id of the record to find."""
+    id: ID!
+  ): OrderProduct
+  orderProducts(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: OrderProductFilter = {}
+
+    """Specify to sort results."""
+    sorting: [OrderProductSort!] = []
+  ): OrderProductConnection!
+}
+
+input CursorPaging {
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+input UserFilter {
+  and: [UserFilter!]
+  or: [UserFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  role: StringFieldComparison
+  email: StringFieldComparison
+  products: UserFilterProductFilter
+}
+
+input UserFilterProductFilter {
+  and: [UserFilterProductFilter!]
+  or: [UserFilterProductFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  type: StringFieldComparison
+  description: StringFieldComparison
+  price: NumberFieldComparison
+  isAvailable: BooleanFieldComparison
+  imageUrl: StringFieldComparison
+  user: NumberFieldComparison
+}
+
+input UserSort {
+  field: UserSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum UserSortFields {
+  id
+  name
+  role
+  email
+}
+
+input OrderFilter {
+  and: [OrderFilter!]
+  or: [OrderFilter!]
+  id: IDFilterComparison
+  status: StringFieldComparison
+  user: NumberFieldComparison
+  orderProducts: OrderFilterOrderProductFilter
+}
+
+input OrderFilterOrderProductFilter {
+  and: [OrderFilterOrderProductFilter!]
+  or: [OrderFilterOrderProductFilter!]
+  id: IDFilterComparison
+  quantity: NumberFieldComparison
+  unitPrice: NumberFieldComparison
+  totalPrice: NumberFieldComparison
+  productId: NumberFieldComparison
+  orderId: NumberFieldComparison
+}
+
+input OrderSort {
+  field: OrderSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum OrderSortFields {
+  id
+  status
+  user
+}
+
+input OrderProductAggregateFilter {
+  and: [OrderProductAggregateFilter!]
+  or: [OrderProductAggregateFilter!]
+  id: IDFilterComparison
+  quantity: NumberFieldComparison
+  unitPrice: NumberFieldComparison
+  totalPrice: NumberFieldComparison
+  productId: NumberFieldComparison
+  orderId: NumberFieldComparison
+}
+
+type Mutation {
+  addProductsToUser(input: AddProductsToUserInput!): User!
+  setProductsOnUser(input: SetProductsOnUserInput!): User!
+  updateOneUser(input: UpdateOneUserInput!): User!
+  deleteOneUser(input: DeleteOneUserInput!): UserDeleteResponse!
+  createUser(input: CreateUserInput!): User!
+  login(input: LoginUserInput!): LoginResponse!
+  setUserOnProduct(input: SetUserOnProductInput!): Product!
+  createOneProduct(input: CreateOneProductInput!): Product!
+  createManyProducts(input: CreateManyProductsInput!): [Product!]!
+  updateOneProduct(input: UpdateOneProductInput!): Product!
+  updateManyProducts(input: UpdateManyProductsInput!): UpdateManyResponse!
+  deleteOneProduct(input: DeleteOneProductInput!): ProductDeleteResponse!
+  deleteManyProducts(input: DeleteManyProductsInput!): DeleteManyResponse!
+  setUserOnOrder(input: SetUserOnOrderInput!): Order!
+  addOrderProductsToOrder(input: AddOrderProductsToOrderInput!): Order!
+  setOrderProductsOnOrder(input: SetOrderProductsOnOrderInput!): Order!
+  createOneOrder(input: CreateOneOrderInput!): Order!
+  createManyOrders(input: CreateManyOrdersInput!): [Order!]!
+  updateOneOrder(input: UpdateOneOrderInput!): Order!
+  updateManyOrders(input: UpdateManyOrdersInput!): UpdateManyResponse!
+  deleteOneOrder(input: DeleteOneOrderInput!): OrderDeleteResponse!
+  deleteManyOrders(input: DeleteManyOrdersInput!): DeleteManyResponse!
+  createOrder(input: OrderInputDto!): Order!
+  setProductIdOnOrderProduct(input: SetProductIdOnOrderProductInput!): OrderProduct!
+  setOrderIdOnOrderProduct(input: SetOrderIdOnOrderProductInput!): OrderProduct!
+  createOneOrderProduct(input: CreateOneOrderProductInput!): OrderProduct!
+  createManyOrderProducts(input: CreateManyOrderProductsInput!): [OrderProduct!]!
+  updateOneOrderProduct(input: UpdateOneOrderProductInput!): OrderProduct!
+  updateManyOrderProducts(input: UpdateManyOrderProductsInput!): UpdateManyResponse!
+  deleteOneOrderProduct(input: DeleteOneOrderProductInput!): OrderProductDeleteResponse!
+  deleteManyOrderProducts(input: DeleteManyOrderProductsInput!): DeleteManyResponse!
+}
+
+input AddProductsToUserInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+input SetProductsOnUserInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+input UpdateOneUserInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateUser!
+}
+
+input UpdateUser {
+  id: ID
+  name: String
+  role: String
+  email: String
+  created: DateTime
+  updated: DateTime
+}
+
+input DeleteOneUserInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input CreateUserInput {
+  name: String!
+  role: String!
+  email: String!
+  password: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input SetUserOnProductInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input CreateOneProductInput {
+  """The record to create"""
+  product: CreateProduct!
+}
+
+input CreateProduct {
+  id: ID
+  name: String
+  type: String
+  description: String
+  price: Float
+  isAvailable: Boolean
+  imageUrl: String
+  user: Float
+  created: DateTime
+  updated: DateTime
+}
+
+input CreateManyProductsInput {
+  """Array of records to create"""
+  products: [CreateProduct!]!
+}
+
+input UpdateOneProductInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateProduct!
+}
+
+input UpdateProduct {
+  id: ID
+  name: String
+  type: String
+  description: String
+  price: Float
+  isAvailable: Boolean
+  imageUrl: String
+  user: Float
+  created: DateTime
+  updated: DateTime
+}
+
+input UpdateManyProductsInput {
+  """Filter used to find fields to update"""
+  filter: ProductUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateProduct!
+}
+
+input ProductUpdateFilter {
+  and: [ProductUpdateFilter!]
+  or: [ProductUpdateFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  type: StringFieldComparison
+  description: StringFieldComparison
+  price: NumberFieldComparison
+  isAvailable: BooleanFieldComparison
+  imageUrl: StringFieldComparison
+  user: NumberFieldComparison
+}
+
+input DeleteOneProductInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input DeleteManyProductsInput {
+  """Filter to find records to delete"""
+  filter: ProductDeleteFilter!
+}
+
+input ProductDeleteFilter {
+  and: [ProductDeleteFilter!]
+  or: [ProductDeleteFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  type: StringFieldComparison
+  description: StringFieldComparison
+  price: NumberFieldComparison
+  isAvailable: BooleanFieldComparison
+  imageUrl: StringFieldComparison
+  user: NumberFieldComparison
+}
+
+input SetUserOnOrderInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input AddOrderProductsToOrderInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+input SetOrderProductsOnOrderInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+input CreateOneOrderInput {
+  """The record to create"""
+  order: CreateOrder!
+}
+
+input CreateOrder {
+  id: ID
+  status: String
+  user: Float
+  price: Float
+  created: DateTime
+  updated: DateTime
+}
+
+input CreateManyOrdersInput {
+  """Array of records to create"""
+  orders: [CreateOrder!]!
+}
+
+input UpdateOneOrderInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateOrder!
+}
+
+input UpdateOrder {
+  id: ID
+  status: String
+  user: Float
+  price: Float
+  created: DateTime
+  updated: DateTime
+}
+
+input UpdateManyOrdersInput {
+  """Filter used to find fields to update"""
+  filter: OrderUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateOrder!
+}
+
+input OrderUpdateFilter {
+  and: [OrderUpdateFilter!]
+  or: [OrderUpdateFilter!]
+  id: IDFilterComparison
+  status: StringFieldComparison
+  user: NumberFieldComparison
+}
+
+input DeleteOneOrderInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input DeleteManyOrdersInput {
+  """Filter to find records to delete"""
+  filter: OrderDeleteFilter!
+}
+
+input OrderDeleteFilter {
+  and: [OrderDeleteFilter!]
+  or: [OrderDeleteFilter!]
+  id: IDFilterComparison
+  status: StringFieldComparison
+  user: NumberFieldComparison
+}
+
+input OrderInputDto {
+  user: Float!
+  orderItems: [OrderProductInput!]
+}
+
+input OrderProductInput {
+  quantity: Float!
+  unitPrice: Float!
+  productId: Float!
+  totalPrice: Float
+}
+
+input SetProductIdOnOrderProductInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input SetOrderIdOnOrderProductInput {
+  """The id of the record."""
+  id: ID!
+
+  """The id of relation."""
+  relationId: ID!
+}
+
+input CreateOneOrderProductInput {
+  """The record to create"""
+  orderProduct: CreateOrderProduct!
+}
+
+input CreateOrderProduct {
+  id: ID
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+  created: DateTime
+  updated: DateTime
+}
+
+input CreateManyOrderProductsInput {
+  """Array of records to create"""
+  orderProducts: [CreateOrderProduct!]!
+}
+
+input UpdateOneOrderProductInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateOrderProduct!
+}
+
+input UpdateOrderProduct {
+  id: ID
+  quantity: Float
+  unitPrice: Float
+  totalPrice: Float
+  productId: Float
+  orderId: Float
+  created: DateTime
+  updated: DateTime
+}
+
+input UpdateManyOrderProductsInput {
+  """Filter used to find fields to update"""
+  filter: OrderProductUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateOrderProduct!
+}
+
+input OrderProductUpdateFilter {
+  and: [OrderProductUpdateFilter!]
+  or: [OrderProductUpdateFilter!]
+  id: IDFilterComparison
+  quantity: NumberFieldComparison
+  unitPrice: NumberFieldComparison
+  totalPrice: NumberFieldComparison
+  productId: NumberFieldComparison
+  orderId: NumberFieldComparison
+}
+
+input DeleteOneOrderProductInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input DeleteManyOrderProductsInput {
+  """Filter to find records to delete"""
+  filter: OrderProductDeleteFilter!
+}
+
+input OrderProductDeleteFilter {
+  and: [OrderProductDeleteFilter!]
+  or: [OrderProductDeleteFilter!]
+  id: IDFilterComparison
+  quantity: NumberFieldComparison
+  unitPrice: NumberFieldComparison
+  totalPrice: NumberFieldComparison
+  productId: NumberFieldComparison
+  orderId: NumberFieldComparison
+}
