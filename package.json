@@ -8,7 +8,8 @@
     "start:fe": "npx nx serve client",
     "start:be": "npx nx serve api",
     "dev": "concurrently -p=\"{name}\" -n=\"React,NestJS\" -c=\"green,blue\" \"npm run start:fe\" \"npm run start:be\"",
-    "test": "nx test"
+    "test": "nx test",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,10 @@
     "typeorm": "^0.2.41"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.3.1",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.2",
+    "@graphql-codegen/typescript-react-apollo": "3.2.3",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
     "@nrwl/cli": "13.4.1",
@@ -71,6 +76,7 @@
     "@typescript-eslint/eslint-plugin": "~5.3.0",
     "@typescript-eslint/parser": "~5.3.0",
     "babel-plugin-import": "^1.13.3",
+    "change-case": "^4.1.2",
     "concurrently": "^6.5.1",
     "cypress": "^9.1.0",
     "eslint": "8.2.0",
