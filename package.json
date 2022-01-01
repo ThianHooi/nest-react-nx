@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.5.6",
     "@nestjs-query/core": "^0.30.0",
     "@nestjs-query/query-graphql": "^0.30.0",
     "@nestjs-query/query-typeorm": "^0.30.0",
