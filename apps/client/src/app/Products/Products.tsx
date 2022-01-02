@@ -40,8 +40,7 @@ const Products: FC = (): JSX.Element => {
   }, [data]);
 
   return (
-    <>
-      <h1>Products page</h1>
+    <div id="products-section" style={{ padding: '48px 0' }}>
       {loading ? (
         <Skeleton />
       ) : (
@@ -78,7 +77,7 @@ const Products: FC = (): JSX.Element => {
           ))}
         </Row>
       )}
-    </>
+    </div>
   );
 };
 
