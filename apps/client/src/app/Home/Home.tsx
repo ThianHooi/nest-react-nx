@@ -26,17 +26,12 @@ const Home: FC = (): JSX.Element => {
     justifyContent: 'center',
   };
 
-  const imgStyle: CSSProperties = {
-    height: '600px',
-    width: 'auto',
-  };
-
   return (
     <>
       <Carousel effect="fade" autoplay>
         <div id="welcome-slide">
-          <Row style={bgStyle}>
-            <Col style={centerStyle} span={14}>
+          <Row justify="space-around" style={bgStyle}>
+            <Col style={centerStyle} md={24} lg={14}>
               <Space style={centerStyle} direction="vertical">
                 <h3 style={titleStyle}>Welcome to My Shop!</h3>
                 <Anchor affix={false} showInkInFixed={false}>
@@ -53,7 +48,7 @@ const Home: FC = (): JSX.Element => {
             </Col>
             <Col span={10}>
               <img
-                style={imgStyle}
+                className="homepage-img"
                 src="https://doodleipsum.com/700/abstract?i=80ac55adfd99147758c3dc6a9771fc40"
                 alt="Welcome Img"
               />
@@ -62,7 +57,7 @@ const Home: FC = (): JSX.Element => {
         </div>
         <div>
           <Row style={bgStyle}>
-            <Col style={centerStyle} span={14}>
+            <Col style={centerStyle} md={24} lg={14}>
               <Space style={centerStyle} direction="vertical">
                 <h3 style={titleStyle}>Login to learn more!</h3>
                 <Link to="/login">
@@ -75,7 +70,7 @@ const Home: FC = (): JSX.Element => {
             </Col>
             <Col span={10}>
               <img
-                style={imgStyle}
+                className="homepage-img"
                 src="https://doodleipsum.com/700/outline?i=f3cbe7193809ac27eeb5dd92fcf5475a"
                 alt="Login Img"
               />
