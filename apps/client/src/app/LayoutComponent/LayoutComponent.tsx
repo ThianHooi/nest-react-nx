@@ -49,7 +49,9 @@ const LayoutPage = (): JSX.Element => {
           })}
         </Menu>
       </Header>
-      <Content style={{ height: '100vh', padding: '50px' }}>
+      <Content style={{
+        // height: '100vh', 
+        padding: '50px' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
