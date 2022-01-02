@@ -65,7 +65,7 @@ const Products: FC = (): JSX.Element => {
       ) : (
         <Row gutter={[16, 16]}>
           {productsInfo.map((item) => (
-            <Col span={6} key={`product-col-${item.id}`}>
+            <Col xs={24} sm={12} md={8} lg={6} key={`product-col-${item.id}`}>
               <Card
                 hoverable
                 key={`product-card-${item.id}`}
