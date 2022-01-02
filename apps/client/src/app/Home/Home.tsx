@@ -33,7 +33,7 @@ const Home: FC = (): JSX.Element => {
 
   return (
     <>
-      <Carousel effect="fade" autoplay={false}>
+      <Carousel effect="fade" autoplay>
         <div id="welcome-slide">
           <Row style={bgStyle}>
             <Col style={centerStyle} span={14}>
