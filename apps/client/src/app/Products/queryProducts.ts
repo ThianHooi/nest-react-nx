@@ -1,29 +1,28 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_PRODUCT = gql`
-  query products($isAvailable: Boolean!) {
-    products(filter: { isAvailable: { is: $isAvailable } }) {
+  query products($isAvailable: Boolean!, $offset: Int) {
+    products(
+      filter: { isAvailable: { is: $isAvailable } }
+      paging: { limit: 16, offset: $offset }
+    ) {
+      totalCount
       pageInfo {
         hasNextPage
         hasPreviousPage
-        startCursor
-        endCursor
       }
-      edges {
-        node {
+      nodes {
+        id
+        name
+        description
+        imageUrl
+        price
+        user {
           id
           name
-          description
-          imageUrl
-          price
-          user {
-            id
-            name
-          }
-          created
-          updated
         }
-        cursor
+        created
+        updated
       }
     }
   }

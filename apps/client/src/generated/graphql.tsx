@@ -398,6 +398,21 @@ export type NumberFieldComparisonBetween = {
   upper: Scalars['Float'];
 };
 
+export type OffsetPageInfo = {
+  __typename?: 'OffsetPageInfo';
+  /** true if paging forward and there are more records. */
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  /** true if paging backwards and there are more records. */
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
+};
+
+export type OffsetPaging = {
+  /** Limit the number of records returned */
+  limit?: InputMaybe<Scalars['Int']>;
+  /** Offset to start returning records from */
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type Order = {
   __typename?: 'Order';
   created: Scalars['DateTime'];
@@ -757,10 +772,12 @@ export type ProductAvgAggregate = {
 
 export type ProductConnection = {
   __typename?: 'ProductConnection';
-  /** Array of edges. */
-  edges: Array<ProductEdge>;
+  /** Array of nodes. */
+  nodes: Array<Product>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type ProductCountAggregate = {
@@ -800,14 +817,6 @@ export type ProductDeleteResponse = {
   type?: Maybe<Scalars['String']>;
   updated?: Maybe<Scalars['DateTime']>;
   user?: Maybe<Scalars['Float']>;
-};
-
-export type ProductEdge = {
-  __typename?: 'ProductEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Product */
-  node: Product;
 };
 
 export type ProductFilter = {
@@ -932,7 +941,7 @@ export type QueryProductArgs = {
 
 export type QueryProductsArgs = {
   filter?: InputMaybe<ProductFilter>;
-  paging?: InputMaybe<CursorPaging>;
+  paging?: InputMaybe<OffsetPaging>;
   sorting?: InputMaybe<Array<ProductSort>>;
 };
 
@@ -1239,36 +1248,36 @@ export type UserSumAggregate = {
 
 export type ProductsQueryVariables = Exact<{
   isAvailable: Scalars['Boolean'];
+  offset?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined, startCursor?: any | null | undefined, endCursor?: any | null | undefined }, edges: Array<{ __typename?: 'ProductEdge', cursor: any, node: { __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, created: any, updated: any, user: { __typename?: 'User', id: string, name: string } } }> } };
+export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined }, nodes: Array<{ __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, created: any, updated: any, user: { __typename?: 'User', id: string, name: string } }> } };
 
 
 export const ProductsDocument = gql`
-    query products($isAvailable: Boolean!) {
-  products(filter: {isAvailable: {is: $isAvailable}}) {
+    query products($isAvailable: Boolean!, $offset: Int) {
+  products(
+    filter: {isAvailable: {is: $isAvailable}}
+    paging: {limit: 16, offset: $offset}
+  ) {
+    totalCount
     pageInfo {
       hasNextPage
       hasPreviousPage
-      startCursor
-      endCursor
     }
-    edges {
-      node {
+    nodes {
+      id
+      name
+      description
+      imageUrl
+      price
+      user {
         id
         name
-        description
-        imageUrl
-        price
-        user {
-          id
-          name
-        }
-        created
-        updated
       }
-      cursor
+      created
+      updated
     }
   }
 }
@@ -1287,6 +1296,7 @@ export const ProductsDocument = gql`
  * const { data, loading, error } = useProductsQuery({
  *   variables: {
  *      isAvailable: // value for 'isAvailable'
+ *      offset: // value for 'offset'
  *   },
  * });
  */
