@@ -1,43 +1,62 @@
 import { FC, useEffect, useState } from 'react';
-import { Skeleton, Card, Row, Col } from 'antd';
+import { Skeleton, Card, Row, Col, Pagination } from 'antd';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 
 import { useProductsQuery } from '../../generated/graphql';
 import { appendClientKey } from '../../util/appendImgClientKey';
+import { IProduct, IOffsetPageInfo } from '../../interfaces/interfaces';
 
 const { Meta } = Card;
-interface IProduct {
-  __typename?: 'Product' | undefined;
-  id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-  created: any;
-  updated: any;
-  price: number;
-  user: {
-    __typename?: 'User' | undefined;
-    id: string;
-    name: string;
-  };
+
+const defaultPaginationInfo: IOffsetPageInfo = {
+  hasNextPage: false,
+  hasPreviousPage: false,
+  totalCount: 0,
+  currentPage: 1,
+};
+
+interface IQueryProduct {
+  isAvailable: boolean;
+  offset: number;
 }
 
 const Products: FC = (): JSX.Element => {
-  const { data, error, loading } = useProductsQuery({
-    variables: { isAvailable: true },
+  const [searchParams, setSearchParams] = useState<IQueryProduct>({
+    isAvailable: true,
+    offset: 0,
+  });
+
+  const {
+    data,
+    error,
+    loading,
+    refetch: refetchProducts,
+  } = useProductsQuery({
+    variables: searchParams,
   });
   const [productsInfo, setProductsInfo] = useState<IProduct[]>([]);
+  const [paginationInfo, setPaginationInfo] = useState<IOffsetPageInfo>(
+    defaultPaginationInfo
+  );
 
   useEffect(() => {
     if (!data) {
       return;
     }
 
-    const { edges } = data.products;
-
-    const products = edges.map((e) => e.node);
+    const { nodes: products, pageInfo, totalCount } = data.products;
     setProductsInfo(products);
+    setPaginationInfo({ ...paginationInfo, ...pageInfo, totalCount });
   }, [data]);
+
+  useEffect(() => {
+    refetchProducts(searchParams);
+  }, [searchParams]);
+
+  const onPaginationChange = (page: number, pageSize: number) => {
+    setPaginationInfo({ currentPage: page });
+    setSearchParams({ ...searchParams, offset: (page - 1) * pageSize });
+  };
 
   return (
     <div id="products-section" style={{ padding: '48px 0' }}>
@@ -75,6 +94,17 @@ const Products: FC = (): JSX.Element => {
               </Card>
             </Col>
           ))}
+          <Col span={24}>
+            <Pagination
+              style={{ float: 'right' }}
+              defaultPageSize={16}
+              pageSize={16}
+              defaultCurrent={1}
+              current={paginationInfo.currentPage}
+              total={paginationInfo.totalCount}
+              onChange={onPaginationChange}
+            />
+          </Col>
         </Row>
       )}
     </div>
