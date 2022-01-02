@@ -1,3 +1,15 @@
 #welcome-slide .ant-anchor-ink {
   height: 0;
 }
+
+.homepage-img {
+  height: 400px;
+  width: auto;
+}
+
+@media (max-width: 999px) {
+  .homepage-img {
+    height: 200px;
+    width: auto;
+  }
+}
