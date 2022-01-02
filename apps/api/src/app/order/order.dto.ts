@@ -2,6 +2,7 @@ import {
   FilterableField,
   FilterableUnPagedRelation,
   IDField,
+  QueryOptions,
   Relation,
 } from '@nestjs-query/query-graphql';
 import { ObjectType, GraphQLISODateTime, Field, ID } from '@nestjs/graphql';
@@ -14,6 +15,7 @@ import { UserDto } from '../user/user.dto';
 @FilterableUnPagedRelation('orderProducts', () => OrderProductDto, {
   disableRemove: true,
 })
+@QueryOptions({ defaultResultSize: 16 })
 export class OrderDto {
   @IDField(() => ID)
   id!: number;
