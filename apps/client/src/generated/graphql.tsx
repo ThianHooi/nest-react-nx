@@ -1246,19 +1246,70 @@ export type UserSumAggregate = {
   id?: Maybe<Scalars['Float']>;
 };
 
+export type ProductQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+
+export type ProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, price: number, description: string, imageUrl: string, user: { __typename?: 'User', name: string, id: string } } | null | undefined };
+
 export type ProductsQueryVariables = Exact<{
   isAvailable: Scalars['Boolean'];
   offset?: InputMaybe<Scalars['Int']>;
+  excludeId?: InputMaybe<Scalars['ID']>;
 }>;
 
 
 export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined }, nodes: Array<{ __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, created: any, updated: any, user: { __typename?: 'User', id: string, name: string } }> } };
 
 
+export const ProductDocument = gql`
+    query product($productId: ID!) {
+  product(id: $productId) {
+    id
+    name
+    price
+    description
+    imageUrl
+    user {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductQuery__
+ *
+ * To run a query within a React component, call `useProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductQuery({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useProductQuery(baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+      }
+export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+        }
+export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
+export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
+export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
 export const ProductsDocument = gql`
-    query products($isAvailable: Boolean!, $offset: Int) {
+    query products($isAvailable: Boolean!, $offset: Int, $excludeId: ID) {
   products(
-    filter: {isAvailable: {is: $isAvailable}}
+    filter: {isAvailable: {is: $isAvailable}, id: {neq: $excludeId}}
     paging: {limit: 16, offset: $offset}
   ) {
     totalCount
@@ -1297,6 +1348,7 @@ export const ProductsDocument = gql`
  *   variables: {
  *      isAvailable: // value for 'isAvailable'
  *      offset: // value for 'offset'
+ *      excludeId: // value for 'excludeId'
  *   },
  * });
  */
