@@ -3,9 +3,11 @@ import { Layout, Menu } from 'antd';
 import Home from '../Home/Home';
 import Products from '../Products/Products';
 
-import { HomeOutlined, ShopOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import Product from '../Product/Product';
 import Login from '../Login/Login';
+
+import { getUser } from '../../util/authService';
 
 const { Header, Content, Footer } = Layout;
 
@@ -15,23 +17,20 @@ const topNavItems = [
     navLabel: 'Home',
     linkTo: '/',
     icon: <HomeOutlined />,
+    requireAuth: false,
   },
   {
     key: 'login',
     navLabel: 'Login',
     linkTo: '/login',
     icon: <UserOutlined />,
+    requireAuth: true,
   },
-  // {
-  //   key: 'products',
-  //   navLabel: 'Products',
-  //   linkTo: '/products',
-  //   icon: <ShopOutlined />,
-  // },
 ];
 
 const LayoutPage = (): JSX.Element => {
   const currentUrlPath = useLocation();
+  const user = getUser();
 
   const getCurrentActiveNav = (): string[] | undefined => {
     const currentNavItem = topNavItems.filter((item) => {
@@ -55,16 +54,22 @@ const LayoutPage = (): JSX.Element => {
           defaultSelectedKeys={['home']}
           selectedKeys={getCurrentActiveNav()}
         >
-          {topNavItems.map((navItem) => {
-            return (
-              <Menu.Item key={navItem.key}>
-                <Link to={`${navItem.linkTo}`}>
-                  {navItem.icon}
-                  <span>{navItem.navLabel}</span>
-                </Link>
-              </Menu.Item>
-            );
-          })}
+          {topNavItems
+            .filter(
+              (navItem) =>
+                // hide login nav if user is logged in
+                !navItem.requireAuth || (navItem.requireAuth && !user)
+            )
+            .map((navItem) => {
+              return (
+                <Menu.Item key={navItem.key}>
+                  <Link to={`${navItem.linkTo}`}>
+                    {navItem.icon}
+                    <span>{navItem.navLabel}</span>
+                  </Link>
+                </Menu.Item>
+              );
+            })}
         </Menu>
       </Header>
       <Content
