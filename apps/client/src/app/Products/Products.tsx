@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Skeleton, Card, Row, Col, Pagination } from 'antd';
+import { Skeleton, Card, Row, Col, Pagination, Tooltip } from 'antd';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 
 import { useProductsQuery } from '../../generated/graphql';
@@ -89,13 +89,17 @@ const Products: FC<{ idExcluded?: string }> = ({ idExcluded }): JSX.Element => {
                     />
                   }
                   actions={[
-                    <Link
-                      to={`/products/${item.id}`}
-                      key={`product-card-${item.id}`}
-                    >
-                      <EyeOutlined key="view" />
-                    </Link>,
-                    <ShoppingCartOutlined key="addToCart" />,
+                    <Tooltip title={'View Product'}>
+                      <Link
+                        to={`/products/${item.id}`}
+                        key={`product-card-${item.id}`}
+                      >
+                        <EyeOutlined key="view" />
+                      </Link>
+                    </Tooltip>,
+                    <Tooltip title={'Add to Cart'}>
+                      <ShoppingCartOutlined key="addToCart" />
+                    </Tooltip>,
                   ]}
                 >
                   <Meta
