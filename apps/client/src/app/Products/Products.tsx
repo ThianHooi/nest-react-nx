@@ -5,6 +5,7 @@ import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useProductsQuery } from '../../generated/graphql';
 import { appendClientKey } from '../../util/appendImgClientKey';
 import { IProduct, IOffsetPageInfo } from '../../interfaces/interfaces';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -18,12 +19,16 @@ const defaultPaginationInfo: IOffsetPageInfo = {
 interface IQueryProduct {
   isAvailable: boolean;
   offset: number;
+  excludeId?: string | undefined;
 }
 
-const Products: FC = (): JSX.Element => {
+const Products: FC<{ idExcluded?: string }> = ({ idExcluded }): JSX.Element => {
   const [searchParams, setSearchParams] = useState<IQueryProduct>({
     isAvailable: true,
     offset: 0,
+    ...(idExcluded && {
+      excludeId: idExcluded,
+    }),
   });
 
   const {
@@ -63,49 +68,56 @@ const Products: FC = (): JSX.Element => {
       {loading ? (
         <Skeleton />
       ) : (
-        <Row gutter={[16, 16]}>
-          {productsInfo.map((item) => (
-            <Col xs={24} sm={12} md={8} lg={6} key={`product-col-${item.id}`}>
-              <Card
-                hoverable
-                key={`product-card-${item.id}`}
-                cover={
-                  <img
-                    style={{
-                      height: '300px',
-                      objectFit: 'contain',
-                    }}
-                    loading="lazy"
-                    width="100%"
-                    height="auto"
-                    alt="product"
-                    src={appendClientKey(item.imageUrl)}
+        <>
+          <Row gutter={[16, 16]}>
+            {productsInfo.map((item) => (
+              <Col xs={24} sm={12} md={8} lg={6} key={`product-col-${item.id}`}>
+                <Card
+                  hoverable
+                  key={`product-card-${item.id}`}
+                  cover={
+                    <img
+                      style={{
+                        height: '300px',
+                        objectFit: 'contain',
+                      }}
+                      loading="lazy"
+                      width="100%"
+                      height="auto"
+                      alt="product"
+                      src={appendClientKey(item.imageUrl)}
+                    />
+                  }
+                  actions={[
+                    <Link
+                      to={`/products/${item.id}`}
+                      key={`product-card-${item.id}`}
+                    >
+                      <EyeOutlined key="view" />
+                    </Link>,
+                    <ShoppingCartOutlined key="addToCart" />,
+                  ]}
+                >
+                  <Meta
+                    title={item.name}
+                    description={`RM ${item.price.toFixed(2)}`}
                   />
-                }
-                actions={[
-                  <EyeOutlined key="view" />,
-                  <ShoppingCartOutlined key="addToCart" />,
-                ]}
-              >
-                <Meta
-                  title={item.name}
-                  description={`RM ${item.price.toFixed(2)}`}
-                />
-              </Card>
+                </Card>
+              </Col>
+            ))}
+            <Col span={24}>
+              <Pagination
+                style={{ float: 'right' }}
+                defaultPageSize={16}
+                pageSize={16}
+                defaultCurrent={1}
+                current={paginationInfo.currentPage}
+                total={paginationInfo.totalCount}
+                onChange={onPaginationChange}
+              />
             </Col>
-          ))}
-          <Col span={24}>
-            <Pagination
-              style={{ float: 'right' }}
-              defaultPageSize={16}
-              pageSize={16}
-              defaultCurrent={1}
-              current={paginationInfo.currentPage}
-              total={paginationInfo.totalCount}
-              onChange={onPaginationChange}
-            />
-          </Col>
-        </Row>
+          </Row>
+        </>
       )}
     </div>
   );
