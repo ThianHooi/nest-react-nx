@@ -3,8 +3,9 @@ import { Layout, Menu } from 'antd';
 import Home from '../Home/Home';
 import Products from '../Products/Products';
 
-import { HomeOutlined, ShopOutlined } from '@ant-design/icons';
+import { HomeOutlined, ShopOutlined, UserOutlined } from '@ant-design/icons';
 import Product from '../Product/Product';
+import Login from '../Login/Login';
 
 const { Header, Content, Footer } = Layout;
 
@@ -14,6 +15,12 @@ const topNavItems = [
     navLabel: 'Home',
     linkTo: '/',
     icon: <HomeOutlined />,
+  },
+  {
+    key: 'login',
+    navLabel: 'Login',
+    linkTo: '/login',
+    icon: <UserOutlined />,
   },
   // {
   //   key: 'products',
@@ -69,6 +76,7 @@ const LayoutPage = (): JSX.Element => {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
