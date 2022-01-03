@@ -1,13 +1,14 @@
 import { Route, Routes, Link, useLocation } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Col, Layout, Menu, Row } from 'antd';
 import Home from '../Home/Home';
 import Products from '../Products/Products';
 
-import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import Product from '../Product/Product';
 import Login from '../Login/Login';
 
 import { getUser } from '../../util/authService';
+import SellerCenter from '../SellerCenter/SellerCenter';
 
 const { Header, Content, Footer } = Layout;
 
@@ -48,29 +49,84 @@ const LayoutPage = (): JSX.Element => {
     <Layout className="layout">
       <Header>
         <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['home']}
-          selectedKeys={getCurrentActiveNav()}
-        >
-          {topNavItems
-            .filter(
-              (navItem) =>
-                // hide login nav if user is logged in
-                !navItem.requireAuth || (navItem.requireAuth && !user)
-            )
-            .map((navItem) => {
-              return (
-                <Menu.Item key={navItem.key}>
-                  <Link to={`${navItem.linkTo}`}>
-                    {navItem.icon}
-                    <span>{navItem.navLabel}</span>
+        <Row>
+          <Col span={20}>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={['home']}
+              selectedKeys={getCurrentActiveNav()}
+            >
+              {topNavItems
+                .filter(
+                  (navItem) =>
+                    // hide login nav if user is logged in
+                    !navItem.requireAuth || (navItem.requireAuth && !user)
+                )
+                .map((navItem) => {
+                  return (
+                    <Menu.Item key={navItem.key}>
+                      <Link to={`${navItem.linkTo}`}>
+                        {navItem.icon}
+                        <span>{navItem.navLabel}</span>
+                      </Link>
+                    </Menu.Item>
+                  );
+                })}
+            </Menu>
+          </Col>
+
+          <Col span={4}>
+          {user && user.role === 'seller' ? (
+              <Menu
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={['seller-center']}
+                selectedKeys={
+                  currentUrlPath.pathname === '/seller'
+                    ? ['seller-center']
+                    : undefined
+                }
+              >
+                <Menu.Item
+                  style={{
+                    float: 'right',
+                  }}
+                  key="seller-center"
+                >
+                  <Link to={`/seller`}>
+                    <SettingOutlined />
+                    <span>Seller Center</span>
                   </Link>
                 </Menu.Item>
-              );
-            })}
-        </Menu>
+              </Menu>
+          ) : null}
+          
+          {user && user.role === 'buyer' ? (
+              <Menu
+                theme="dark"
+                mode="horizontal"
+                selectedKeys={
+                  currentUrlPath.pathname === '/profile'
+                    ? ['buyer-center']
+                    : undefined
+                }
+              >
+                <Menu.Item
+                  style={{
+                    float: 'right',
+                  }}
+                  key="buyer-center"
+                >
+                  <Link to={`/seller`}>
+                    <SettingOutlined />
+                    <span>Profile</span>
+                  </Link>
+                </Menu.Item>
+              </Menu>
+          ) : null}
+          </Col>
+        </Row>
       </Header>
       <Content
         style={{
@@ -82,6 +138,7 @@ const LayoutPage = (): JSX.Element => {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/seller" element={<SellerCenter />} />
         </Routes>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
