@@ -4,7 +4,11 @@ import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 
 import { useProductsQuery } from '../../generated/graphql';
 import { appendClientKey } from '../../util/appendImgClientKey';
-import { IProduct, IOffsetPageInfo } from '../../interfaces/interfaces';
+import {
+  IProduct,
+  IOffsetPageInfo,
+  IQueryProduct,
+} from '../../interfaces/interfaces';
 import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
@@ -15,12 +19,6 @@ const defaultPaginationInfo: IOffsetPageInfo = {
   totalCount: 0,
   currentPage: 1,
 };
-
-interface IQueryProduct {
-  isAvailable: boolean;
-  offset: number;
-  excludeId?: string | undefined;
-}
 
 const Products: FC<{ idExcluded?: string }> = ({ idExcluded }): JSX.Element => {
   const [searchParams, setSearchParams] = useState<IQueryProduct>({
@@ -33,7 +31,6 @@ const Products: FC<{ idExcluded?: string }> = ({ idExcluded }): JSX.Element => {
 
   const {
     data,
-    error,
     loading,
     refetch: refetchProducts,
   } = useProductsQuery({

@@ -7,7 +7,8 @@ export interface IProduct {
   created: any;
   updated: any;
   price: number;
-  user: {
+  isAvailable?: boolean;
+  user?: {
     __typename?: 'User' | undefined;
     id: string;
     name: string;
@@ -35,4 +36,10 @@ export interface IOffsetPageInfo {
 export interface ILoginInput {
   email: string;
   password: string;
+}
+
+export interface IQueryProduct {
+  isAvailable: boolean;
+  offset: number;
+  excludeId?: string | undefined;
 }
