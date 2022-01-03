@@ -4,6 +4,7 @@ import Home from '../Home/Home';
 import Products from '../Products/Products';
 
 import { HomeOutlined, ShopOutlined } from '@ant-design/icons';
+import Product from '../Product/Product';
 
 const { Header, Content, Footer } = Layout;
 
@@ -25,10 +26,15 @@ const topNavItems = [
 const LayoutPage = (): JSX.Element => {
   const currentUrlPath = useLocation();
 
-  const getCurrentActiveNav = () => {
+  const getCurrentActiveNav = (): string[] | undefined => {
     const currentNavItem = topNavItems.filter((item) => {
       return item.linkTo === currentUrlPath.pathname;
     });
+
+    if (!currentNavItem || !currentNavItem.length) {
+      return undefined;
+    }
+
     return [currentNavItem[0].key];
   };
 
@@ -62,6 +68,7 @@ const LayoutPage = (): JSX.Element => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:productId" element={<Product />} />
         </Routes>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
