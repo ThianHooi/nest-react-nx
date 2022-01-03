@@ -31,3 +31,8 @@ export interface IOffsetPageInfo {
   totalCount?: number;
   currentPage?: number;
 }
+
+export interface ILoginInput {
+  email: string;
+  password: string;
+}
