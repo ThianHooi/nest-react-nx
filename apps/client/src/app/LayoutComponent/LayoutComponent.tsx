@@ -1,5 +1,5 @@
 import { Route, Routes, Link, useLocation } from 'react-router-dom';
-import { Col, Layout, Menu, Row } from 'antd';
+import { Col, Dropdown, Layout, Menu, Row } from 'antd';
 import Home from '../Home/Home';
 import Products from '../Products/Products';
 
@@ -9,6 +9,8 @@ import Login from '../Login/Login';
 
 import { getUser } from '../../util/authService';
 import SellerCenter from '../SellerCenter/SellerCenter';
+import SellerMenu from './SellerMenu';
+import ManageProducts from '../ManageProducts/ManageProducts';
 
 const { Header, Content, Footer } = Layout;
 
@@ -77,7 +79,7 @@ const LayoutPage = (): JSX.Element => {
           </Col>
 
           <Col span={4}>
-          {user && user.role === 'seller' ? (
+            {user && user.role === 'seller' ? (
               <Menu
                 theme="dark"
                 mode="horizontal"
@@ -88,21 +90,23 @@ const LayoutPage = (): JSX.Element => {
                     : undefined
                 }
               >
-                <Menu.Item
-                  style={{
-                    float: 'right',
-                  }}
-                  key="seller-center"
-                >
-                  <Link to={`/seller`}>
-                    <SettingOutlined />
-                    <span>Seller Center</span>
-                  </Link>
-                </Menu.Item>
+                <Dropdown overlay={SellerMenu}>
+                  <Menu.Item
+                    style={{
+                      float: 'right',
+                    }}
+                    key="seller-center"
+                  >
+                    <Link to={`/seller`}>
+                      <SettingOutlined />
+                      <span>Seller Center</span>
+                    </Link>
+                  </Menu.Item>
+                </Dropdown>
               </Menu>
-          ) : null}
-          
-          {user && user.role === 'buyer' ? (
+            ) : null}
+
+            {user && user.role === 'buyer' ? (
               <Menu
                 theme="dark"
                 mode="horizontal"
@@ -124,7 +128,7 @@ const LayoutPage = (): JSX.Element => {
                   </Link>
                 </Menu.Item>
               </Menu>
-          ) : null}
+            ) : null}
           </Col>
         </Row>
       </Header>
@@ -139,6 +143,7 @@ const LayoutPage = (): JSX.Element => {
           <Route path="/products/:productId" element={<Product />} />
           <Route path="/login" element={<Login />} />
           <Route path="/seller" element={<SellerCenter />} />
+          <Route path="/products/manage" element={<ManageProducts />} />
         </Routes>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
