@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_PRODUCT = gql`
-  query products($isAvailable: Boolean!, $offset: Int) {
+  query products($isAvailable: Boolean!, $offset: Int, $excludeId: ID) {
     products(
-      filter: { isAvailable: { is: $isAvailable } }
+      filter: { isAvailable: { is: $isAvailable }, id: { neq: $excludeId } }
       paging: { limit: 16, offset: $offset }
     ) {
       totalCount
