@@ -10,9 +10,10 @@ This project was develoepd using NestJS + React + Typescript + GraphQL + SQLite 
 ## Steps to run this project
 1. Git clone the porject
 2. Go to project directory and run `npm install`
-3. Run `npm run dev` to run `api` and `client` concurrently
-4. `api` can be accessed at `http://localhost:8000/graphql`
-5. `client` can be accessed at `http://localhost:4200/`
+3. Add `.env` file following the variables in `.env.example`
+4. Run `npm run dev` to run `api` and `client` concurrently
+5. `api` can be accessed at `http://localhost:8000/graphql`
+6. `client` can be accessed at `http://localhost:4200/`
 
 ## Account Credentials
 
