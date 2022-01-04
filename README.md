@@ -29,3 +29,4 @@ Password: password123
 ## Todo
 1. Seller manage orders
 2. Add search bar
+3. Add sorting
