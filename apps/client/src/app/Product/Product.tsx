@@ -1,14 +1,18 @@
-import { Col, Row, Skeleton } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Button, Col, message, Row, Skeleton } from 'antd';
 import { CSSProperties, FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useProductQuery } from '../../generated/graphql';
+import { ICartProduct } from '../../interfaces/interfaces';
+import { useLocalStorage } from '../../util/localstorage';
 import Products from '../Products/Products';
 
 import './Product.css';
 
 const Product: FC = (): JSX.Element => {
   const { productId } = useParams();
+  const [cart, setCart] = useLocalStorage('cart', []);
 
   const {
     data: singleProductData,
@@ -24,6 +28,38 @@ const Product: FC = (): JSX.Element => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  };
+
+  const addToCart = () => {
+    const currentCart: ICartProduct[] = cart;
+
+    const currentProductInCart = currentCart.find(
+      (item: ICartProduct) => item.productId?.toString() === productId
+    );
+
+    if (!currentProductInCart) {
+      setCart([
+        ...cart,
+        {
+          product: singleProductData?.product,
+          productId,
+          quantity: 1,
+          unitPrice: singleProductData?.product?.price,
+        },
+      ]);
+    } else {
+      currentProductInCart.quantity = currentProductInCart.quantity
+        ? currentProductInCart.quantity + 1
+        : 1;
+      setCart([
+        ...cart.filter(
+          (i: ICartProduct) => i.productId?.toString() !== productId
+        ),
+        currentProductInCart,
+      ]);
+    }
+
+    message.success(`${singleProductData?.product?.name} added to cart!`);
   };
 
   return (
@@ -47,6 +83,13 @@ const Product: FC = (): JSX.Element => {
               <div className="product-section__price">
                 <h3>RM {singleProductData?.product?.price?.toFixed(2)}</h3>
               </div>
+              <Button
+                type="primary"
+                icon={<ShoppingCartOutlined />}
+                onClick={addToCart}
+              >
+                Add To Cart
+              </Button>
             </Col>
           </Row>
           <div className="product-section__desc">
