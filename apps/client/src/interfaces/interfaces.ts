@@ -43,3 +43,12 @@ export interface IQueryProduct {
   offset: number;
   excludeId?: string | undefined;
 }
+
+export interface IProductInput {
+  name: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  isAvailable: boolean;
+  user: number;
+}
