@@ -1246,6 +1246,14 @@ export type UserSumAggregate = {
   id?: Maybe<Scalars['Float']>;
 };
 
+export type CreateOrderMutationVariables = Exact<{
+  user: Scalars['Float'];
+  input?: InputMaybe<Array<OrderProductInput> | OrderProductInput>;
+}>;
+
+
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id: string, status: string, price: number, user: { __typename?: 'User', name: string, id: string }, orderProducts: Array<{ __typename?: 'OrderProduct', id: string, quantity: number, unitPrice: number, totalPrice: number, productId: { __typename?: 'Product', name: string, imageUrl: string } }> } };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -1291,17 +1299,6 @@ export type ProductQueryVariables = Exact<{
 
 export type ProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, price: number, description: string, imageUrl: string, user: { __typename?: 'User', name: string, id: string } } | null | undefined };
 
-export type FilterProductsQueryVariables = Exact<{
-  isAvailable: Scalars['Boolean'];
-  offset?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  lowerPrice?: InputMaybe<Scalars['Float']>;
-  upperPrice?: InputMaybe<Scalars['Float']>;
-}>;
-
-
-export type FilterProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined }, nodes: Array<{ __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, created: any, updated: any, user: { __typename?: 'User', id: string, name: string } }> } };
-
 export type ProductsQueryVariables = Exact<{
   isAvailable: Scalars['Boolean'];
   offset?: InputMaybe<Scalars['Int']>;
@@ -1315,6 +1312,56 @@ export type ProductsQueryVariables = Exact<{
 export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined }, nodes: Array<{ __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, created: any, updated: any, user: { __typename?: 'User', id: string, name: string } }> } };
 
 
+export const CreateOrderDocument = gql`
+    mutation createOrder($user: Float!, $input: [OrderProductInput!]) {
+  createOrder(input: {user: $user, orderItems: $input}) {
+    id
+    status
+    price
+    user {
+      name
+      id
+    }
+    orderProducts {
+      id
+      quantity
+      unitPrice
+      totalPrice
+      productId {
+        name
+        imageUrl
+      }
+    }
+  }
+}
+    `;
+export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
+
+/**
+ * __useCreateOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOrderMutation, { data, loading, error }] = useCreateOrderMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
+      }
+export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
+export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
 export const LoginDocument = gql`
     mutation login($email: String!, $password: String!) {
   login(input: {email: $email, password: $password}) {
@@ -1539,65 +1586,6 @@ export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Pr
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
 export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
-export const FilterProductsDocument = gql`
-    query filterProducts($isAvailable: Boolean!, $offset: Int, $name: String, $lowerPrice: Float, $upperPrice: Float) {
-  products(
-    filter: {isAvailable: {is: $isAvailable}, name: {like: $name}, and: [{price: {gte: $lowerPrice}}, {price: {lte: $upperPrice}}]}
-    paging: {limit: 16, offset: $offset}
-  ) {
-    totalCount
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-    }
-    nodes {
-      id
-      name
-      description
-      imageUrl
-      price
-      user {
-        id
-        name
-      }
-      created
-      updated
-    }
-  }
-}
-    `;
-
-/**
- * __useFilterProductsQuery__
- *
- * To run a query within a React component, call `useFilterProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFilterProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFilterProductsQuery({
- *   variables: {
- *      isAvailable: // value for 'isAvailable'
- *      offset: // value for 'offset'
- *      name: // value for 'name'
- *      lowerPrice: // value for 'lowerPrice'
- *      upperPrice: // value for 'upperPrice'
- *   },
- * });
- */
-export function useFilterProductsQuery(baseOptions: Apollo.QueryHookOptions<FilterProductsQuery, FilterProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FilterProductsQuery, FilterProductsQueryVariables>(FilterProductsDocument, options);
-      }
-export function useFilterProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilterProductsQuery, FilterProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FilterProductsQuery, FilterProductsQueryVariables>(FilterProductsDocument, options);
-        }
-export type FilterProductsQueryHookResult = ReturnType<typeof useFilterProductsQuery>;
-export type FilterProductsLazyQueryHookResult = ReturnType<typeof useFilterProductsLazyQuery>;
-export type FilterProductsQueryResult = Apollo.QueryResult<FilterProductsQuery, FilterProductsQueryVariables>;
 export const ProductsDocument = gql`
     query products($isAvailable: Boolean!, $offset: Int, $excludeId: ID, $name: String, $lowerPrice: Float, $upperPrice: Float) {
   products(

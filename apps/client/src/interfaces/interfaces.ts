@@ -22,6 +22,12 @@ export interface ICartProduct {
   totalPrice?: number;
   product: IProduct;
 }
+
+export interface IOrderProduct {
+  quantity: number;
+  unitPrice: number;
+  productId: number;
+}
 export interface IPageInfo {
   __typename?: 'PageInfo' | undefined;
   endCursor?: any;
