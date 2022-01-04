@@ -97,10 +97,8 @@ const LayoutPage = (): JSX.Element => {
                     }}
                     key="seller-center"
                   >
-                    <Link to={`/seller`}>
-                      <SettingOutlined />
-                      <span>Seller Center</span>
-                    </Link>
+                    <SettingOutlined />
+                    <span>Seller Center</span>
                   </Menu.Item>
                 </Dropdown>
               </Menu>
