@@ -110,9 +110,11 @@ const Cart: FC = (): JSX.Element => {
           <h1>My Cart</h1>
         </Col>
         <Col>
-          <Button onClick={checkout} type="primary">
-            Checkout
-          </Button>
+          {cart && cart.length ? (
+            <Button onClick={checkout} type="primary">
+              Checkout
+            </Button>
+          ) : null}
         </Col>
       </Row>
       {cart && cart.length ? null : (
