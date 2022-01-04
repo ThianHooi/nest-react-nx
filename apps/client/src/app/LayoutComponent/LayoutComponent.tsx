@@ -1,13 +1,25 @@
-import { Route, Routes, Link, useLocation } from 'react-router-dom';
-import { Col, Dropdown, Layout, Menu, Row } from 'antd';
+import {
+  Route,
+  Routes,
+  Link,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+import { Col, Dropdown, Layout, Menu, Modal, Row } from 'antd';
 import Home from '../Home/Home';
 import Products from '../Products/Products';
 
-import { HomeOutlined, SettingOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  LogoutOutlined,
+  SettingOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import Product from '../Product/Product';
 import Login from '../Login/Login';
 
-import { getUser } from '../../util/authService';
+import { getUser, removeUserSession } from '../../util/authService';
 import SellerCenter from '../SellerCenter/SellerCenter';
 import SellerMenu from './SellerMenu';
 import ManageProducts from '../ManageProducts/ManageProducts';
@@ -41,6 +53,7 @@ const topNavItems = [
 
 const LayoutPage = (): JSX.Element => {
   const currentUrlPath = useLocation();
+  const navigate = useNavigate();
   const user = getUser();
 
   const getCurrentActiveNav = (): string[] | undefined => {
@@ -53,6 +66,18 @@ const LayoutPage = (): JSX.Element => {
     }
 
     return [currentNavItem[0].key];
+  };
+
+  const logout = () => {
+    Modal.confirm({
+      content: 'Sad! Are you wish to logout?',
+      okText: 'Logout',
+      cancelText: 'Cancel',
+      onOk: () => {
+        removeUserSession();
+        navigate('/', { replace: true });
+      },
+    });
   };
 
   return (
@@ -83,6 +108,13 @@ const LayoutPage = (): JSX.Element => {
                     </Menu.Item>
                   );
                 })}
+
+              {user ? (
+                <Menu.Item onClick={logout} key="logout">
+                  {' '}
+                  <LogoutOutlined /> Logout
+                </Menu.Item>
+              ) : null}
             </Menu>
           </Col>
 
