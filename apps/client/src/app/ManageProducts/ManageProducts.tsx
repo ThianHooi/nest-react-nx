@@ -1,6 +1,7 @@
 import { FC, CSSProperties, useState, useEffect } from 'react';
 
 import {
+  EditOutlined,
   EyeOutlined,
   FileImageOutlined,
   PlusCircleOutlined,
@@ -14,6 +15,7 @@ import {
 } from '../../interfaces/interfaces';
 import ViewProductModal from './ViewProductModal';
 import AddProductModal from './CreateProductForm';
+import EditProductModal from './EditProductModal';
 
 const centerStyle: CSSProperties = {
   display: 'flex',
@@ -40,6 +42,7 @@ const ManageProducts: FC = (): JSX.Element => {
   });
   const [viewProductVisible, setViewProductVisible] = useState<string | null>();
   const [addProductVisible, setAddProductVisible] = useState<boolean>(false);
+  const [editProductVisible, setEditProductVisible] = useState<string | null>();
 
   useEffect(() => {
     if (!data) {
@@ -122,11 +125,25 @@ const ManageProducts: FC = (): JSX.Element => {
                 onClick={() => setViewProductVisible(record.id)}
               />
             </Tooltip>
+            <Tooltip title="Edit">
+              <Button
+                size="small"
+                type="link"
+                icon={<EditOutlined style={{ fontSize: '28px' }} />}
+                onClick={() => setEditProductVisible(record.id)}
+              />
+            </Tooltip>
           </Space>
           <ViewProductModal
             product={record}
             visible={viewProductVisible === record.id}
             onCancel={() => setViewProductVisible(null)}
+          />
+
+          <EditProductModal
+            product={record}
+            visible={editProductVisible === record.id}
+            onCancel={() => setEditProductVisible(null)}
           />
         </>
       ),
