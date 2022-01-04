@@ -13,6 +13,18 @@ This project was develoepd using NestJS + React + Typescript + GraphQL + SQLite 
 3. Run `npm run dev` to run `api` and `client` concurrently
 4. `api` can be accessed at `http://localhost:8000/graphql`
 5. `client` can be accessed at `http://localhost:4200/`
+
+## Account Credentials
+
+### Seller
+Email: seller@gmail.com
+
+Password: password123
+
+### Buyer
+Email: buyer@gmail.com
+
+Password: password123
    
 ## Todo
 1. Seller manage orders
