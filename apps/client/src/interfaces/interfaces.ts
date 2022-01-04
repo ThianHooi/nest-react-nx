@@ -42,6 +42,9 @@ export interface IQueryProduct {
   isAvailable: boolean;
   offset: number;
   excludeId?: string | undefined;
+  name?: string | undefined;
+  lowerPrice?: number | undefined;
+  upperPrice?: number | undefined;
 }
 
 export interface IProductInput {
