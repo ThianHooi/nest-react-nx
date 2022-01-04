@@ -1,10 +1,18 @@
-import { EyeOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Row, Tooltip } from 'antd';
+import {
+  EyeOutlined,
+  MinusOutlined,
+  PlusOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
+import { useMutation } from '@apollo/client';
+import { Button, Card, Col, message, Modal, Result, Row, Tooltip } from 'antd';
 import { CSSProperties, FC } from 'react';
 import { Link } from 'react-router-dom';
-import { ICartProduct } from '../../interfaces/interfaces';
+import { ICartProduct, IOrderProduct } from '../../interfaces/interfaces';
 import { appendClientKey } from '../../util/appendImgClientKey';
+import { getUser } from '../../util/authService';
 import { useLocalStorage } from '../../util/localstorage';
+import { ADD_ORDER } from './addOrderMutation';
 
 const flexRow: CSSProperties = {
   display: 'flex',
@@ -15,6 +23,8 @@ const flexRow: CSSProperties = {
 
 const Cart: FC = (): JSX.Element => {
   const [cart, setCart] = useLocalStorage('cart', []);
+  const [postCreateOrder] = useMutation(ADD_ORDER);
+  const user = getUser();
 
   const removeFromCart = (productId: number) => {
     const currentCart: ICartProduct[] = cart;
@@ -64,7 +74,34 @@ const Cart: FC = (): JSX.Element => {
     }
   };
 
-  // const checkout = () => {}
+  const checkout = async () => {
+    try {
+      const orderProducts: IOrderProduct = cart.map((item: ICartProduct) => {
+        const { quantity, unitPrice, productId } = item;
+
+        return {
+          productId: parseFloat(productId.toString()),
+          quantity,
+          unitPrice,
+        };
+      });
+
+      const { data } = await postCreateOrder({
+        variables: {
+          user: parseInt(user.id),
+          input: orderProducts,
+        },
+      });
+
+      Modal.success({
+        content: 'Success! Order added!',
+        okText: 'OK',
+      });
+      setCart([]);
+    } catch (e: any) {
+      message.error(e.message);
+    }
+  };
 
   return (
     <>
@@ -73,9 +110,22 @@ const Cart: FC = (): JSX.Element => {
           <h1>My Cart</h1>
         </Col>
         <Col>
-          <Button type="primary">Checkout</Button>
+          <Button onClick={checkout} type="primary">
+            Checkout
+          </Button>
         </Col>
       </Row>
+      {cart && cart.length ? null : (
+        <Result
+          icon={<SmileOutlined />}
+          title="Your cart is empty!"
+          extra={
+            <Link to="/#products-section">
+              <Button type="primary">Browse Products</Button>
+            </Link>
+          }
+        />
+      )}
 
       <Row gutter={[16, 16]}>
         {cart.map((item: ICartProduct) => {
