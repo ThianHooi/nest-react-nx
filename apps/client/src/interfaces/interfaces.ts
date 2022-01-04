@@ -15,6 +15,13 @@ export interface IProduct {
   };
 }
 
+export interface ICartProduct {
+  quantity: number;
+  unitPrice: number;
+  productId: number;
+  totalPrice?: number;
+  product: IProduct;
+}
 export interface IPageInfo {
   __typename?: 'PageInfo' | undefined;
   endCursor?: any;
