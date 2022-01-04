@@ -20,8 +20,9 @@ const guards = [JwtAuthGuard];
         {
           DTOClass: ProductDto,
           EntityClass: ProductEntity,
-          create: { guards },
-          update: { guards },
+          create: { guards, many: { disabled: true } },
+          update: { guards, many: { disabled: true } },
+          delete: { guards, one: { disabled: true }, many: { disabled: true } },
         },
       ],
     }),

@@ -137,11 +137,6 @@ enum SortNulls {
   NULLS_LAST
 }
 
-type DeleteManyResponse {
-  """The number of records deleted."""
-  deletedCount: Int!
-}
-
 type UserDeleteResponse {
   id: ID
   name: String
@@ -149,11 +144,6 @@ type UserDeleteResponse {
   email: String
   created: DateTime
   updated: DateTime
-}
-
-type UpdateManyResponse {
-  """The number of records updated."""
-  updatedCount: Int!
 }
 
 type UserEdge {
@@ -228,19 +218,6 @@ type UserMaxAggregate {
 type LoginResponse {
   access_token: String!
   user: User!
-}
-
-type ProductDeleteResponse {
-  id: ID
-  name: String
-  type: String
-  description: String
-  price: Float
-  isAvailable: Boolean
-  imageUrl: String
-  user: Float
-  created: DateTime
-  updated: DateTime
 }
 
 type OffsetPageInfo {
@@ -369,17 +346,6 @@ type OrderProduct {
   updated: DateTime!
 }
 
-type OrderProductDeleteResponse {
-  id: ID
-  quantity: Float
-  unitPrice: Float
-  totalPrice: Float
-  productId: Float
-  orderId: Float
-  created: DateTime
-  updated: DateTime
-}
-
 type OrderProductEdge {
   """The node containing the OrderProduct"""
   node: OrderProduct!
@@ -457,15 +423,6 @@ type OrderProductAggregateResponse {
   avg: OrderProductAvgAggregate
   min: OrderProductMinAggregate
   max: OrderProductMaxAggregate
-}
-
-type OrderDeleteResponse {
-  id: ID
-  status: String
-  user: Float
-  price: Float
-  created: DateTime
-  updated: DateTime
 }
 
 type OrderEdge {
@@ -691,29 +648,16 @@ type Mutation {
   login(input: LoginUserInput!): LoginResponse!
   setUserOnProduct(input: SetUserOnProductInput!): Product!
   createOneProduct(input: CreateOneProductInput!): Product!
-  createManyProducts(input: CreateManyProductsInput!): [Product!]!
   updateOneProduct(input: UpdateOneProductInput!): Product!
-  updateManyProducts(input: UpdateManyProductsInput!): UpdateManyResponse!
-  deleteOneProduct(input: DeleteOneProductInput!): ProductDeleteResponse!
-  deleteManyProducts(input: DeleteManyProductsInput!): DeleteManyResponse!
   setUserOnOrder(input: SetUserOnOrderInput!): Order!
   addOrderProductsToOrder(input: AddOrderProductsToOrderInput!): Order!
   setOrderProductsOnOrder(input: SetOrderProductsOnOrderInput!): Order!
-  createOneOrder(input: CreateOneOrderInput!): Order!
   createManyOrders(input: CreateManyOrdersInput!): [Order!]!
-  updateOneOrder(input: UpdateOneOrderInput!): Order!
-  updateManyOrders(input: UpdateManyOrdersInput!): UpdateManyResponse!
-  deleteOneOrder(input: DeleteOneOrderInput!): OrderDeleteResponse!
-  deleteManyOrders(input: DeleteManyOrdersInput!): DeleteManyResponse!
   createOrder(input: OrderInputDto!): Order!
   setProductIdOnOrderProduct(input: SetProductIdOnOrderProductInput!): OrderProduct!
   setOrderIdOnOrderProduct(input: SetOrderIdOnOrderProductInput!): OrderProduct!
   createOneOrderProduct(input: CreateOneOrderProductInput!): OrderProduct!
-  createManyOrderProducts(input: CreateManyOrderProductsInput!): [OrderProduct!]!
   updateOneOrderProduct(input: UpdateOneOrderProductInput!): OrderProduct!
-  updateManyOrderProducts(input: UpdateManyOrderProductsInput!): UpdateManyResponse!
-  deleteOneOrderProduct(input: DeleteOneOrderProductInput!): OrderProductDeleteResponse!
-  deleteManyOrderProducts(input: DeleteManyOrderProductsInput!): DeleteManyResponse!
 }
 
 input AddProductsToUserInput {
@@ -792,11 +736,6 @@ input CreateProduct {
   updated: DateTime
 }
 
-input CreateManyProductsInput {
-  """Array of records to create"""
-  products: [CreateProduct!]!
-}
-
 input UpdateOneProductInput {
   """The id of the record to update"""
   id: ID!
@@ -816,50 +755,6 @@ input UpdateProduct {
   user: Float
   created: DateTime
   updated: DateTime
-}
-
-input UpdateManyProductsInput {
-  """Filter used to find fields to update"""
-  filter: ProductUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateProduct!
-}
-
-input ProductUpdateFilter {
-  and: [ProductUpdateFilter!]
-  or: [ProductUpdateFilter!]
-  id: IDFilterComparison
-  name: StringFieldComparison
-  type: StringFieldComparison
-  description: StringFieldComparison
-  price: NumberFieldComparison
-  isAvailable: BooleanFieldComparison
-  imageUrl: StringFieldComparison
-  user: NumberFieldComparison
-}
-
-input DeleteOneProductInput {
-  """The id of the record to delete."""
-  id: ID!
-}
-
-input DeleteManyProductsInput {
-  """Filter to find records to delete"""
-  filter: ProductDeleteFilter!
-}
-
-input ProductDeleteFilter {
-  and: [ProductDeleteFilter!]
-  or: [ProductDeleteFilter!]
-  id: IDFilterComparison
-  name: StringFieldComparison
-  type: StringFieldComparison
-  description: StringFieldComparison
-  price: NumberFieldComparison
-  isAvailable: BooleanFieldComparison
-  imageUrl: StringFieldComparison
-  user: NumberFieldComparison
 }
 
 input SetUserOnOrderInput {
@@ -886,9 +781,9 @@ input SetOrderProductsOnOrderInput {
   relationIds: [ID!]!
 }
 
-input CreateOneOrderInput {
-  """The record to create"""
-  order: CreateOrder!
+input CreateManyOrdersInput {
+  """Array of records to create"""
+  orders: [CreateOrder!]!
 }
 
 input CreateOrder {
@@ -898,62 +793,6 @@ input CreateOrder {
   price: Float
   created: DateTime
   updated: DateTime
-}
-
-input CreateManyOrdersInput {
-  """Array of records to create"""
-  orders: [CreateOrder!]!
-}
-
-input UpdateOneOrderInput {
-  """The id of the record to update"""
-  id: ID!
-
-  """The update to apply."""
-  update: UpdateOrder!
-}
-
-input UpdateOrder {
-  id: ID
-  status: String
-  user: Float
-  price: Float
-  created: DateTime
-  updated: DateTime
-}
-
-input UpdateManyOrdersInput {
-  """Filter used to find fields to update"""
-  filter: OrderUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateOrder!
-}
-
-input OrderUpdateFilter {
-  and: [OrderUpdateFilter!]
-  or: [OrderUpdateFilter!]
-  id: IDFilterComparison
-  status: StringFieldComparison
-  user: NumberFieldComparison
-}
-
-input DeleteOneOrderInput {
-  """The id of the record to delete."""
-  id: ID!
-}
-
-input DeleteManyOrdersInput {
-  """Filter to find records to delete"""
-  filter: OrderDeleteFilter!
-}
-
-input OrderDeleteFilter {
-  and: [OrderDeleteFilter!]
-  or: [OrderDeleteFilter!]
-  id: IDFilterComparison
-  status: StringFieldComparison
-  user: NumberFieldComparison
 }
 
 input OrderInputDto {
@@ -1000,11 +839,6 @@ input CreateOrderProduct {
   updated: DateTime
 }
 
-input CreateManyOrderProductsInput {
-  """Array of records to create"""
-  orderProducts: [CreateOrderProduct!]!
-}
-
 input UpdateOneOrderProductInput {
   """The id of the record to update"""
   id: ID!
@@ -1022,44 +856,4 @@ input UpdateOrderProduct {
   orderId: Float
   created: DateTime
   updated: DateTime
-}
-
-input UpdateManyOrderProductsInput {
-  """Filter used to find fields to update"""
-  filter: OrderProductUpdateFilter!
-
-  """The update to apply to all records found using the filter"""
-  update: UpdateOrderProduct!
-}
-
-input OrderProductUpdateFilter {
-  and: [OrderProductUpdateFilter!]
-  or: [OrderProductUpdateFilter!]
-  id: IDFilterComparison
-  quantity: NumberFieldComparison
-  unitPrice: NumberFieldComparison
-  totalPrice: NumberFieldComparison
-  productId: NumberFieldComparison
-  orderId: NumberFieldComparison
-}
-
-input DeleteOneOrderProductInput {
-  """The id of the record to delete."""
-  id: ID!
-}
-
-input DeleteManyOrderProductsInput {
-  """Filter to find records to delete"""
-  filter: OrderProductDeleteFilter!
-}
-
-input OrderProductDeleteFilter {
-  and: [OrderProductDeleteFilter!]
-  or: [OrderProductDeleteFilter!]
-  id: IDFilterComparison
-  quantity: NumberFieldComparison
-  unitPrice: NumberFieldComparison
-  totalPrice: NumberFieldComparison
-  productId: NumberFieldComparison
-  orderId: NumberFieldComparison
 }
