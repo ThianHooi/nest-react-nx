@@ -1254,6 +1254,29 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', access_token: string, user: { __typename?: 'User', id: string, name: string, role: string } } };
 
+export type CreateProductMutationVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['Float']>;
+  isAvailable?: InputMaybe<Scalars['Boolean']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
+  user: Scalars['Float'];
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createOneProduct: { __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, isAvailable: boolean, created: any, updated: any } };
+
+export type UpdateProductMutationVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['Float']>;
+  isAvailable?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+}>;
+
+
+export type UpdateProductMutation = { __typename?: 'Mutation', updateOneProduct: { __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, isAvailable: boolean, created: any, updated: any } };
+
 export type AdminProductsQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
 }>;
@@ -1317,6 +1340,99 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const CreateProductDocument = gql`
+    mutation createProduct($name: String, $description: String, $price: Float, $isAvailable: Boolean, $imageUrl: String, $user: Float!) {
+  createOneProduct(
+    input: {product: {name: $name, price: $price, isAvailable: $isAvailable, description: $description, imageUrl: $imageUrl, user: $user, type: "tech"}}
+  ) {
+    id
+    name
+    description
+    imageUrl
+    price
+    isAvailable
+    created
+    updated
+  }
+}
+    `;
+export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+
+/**
+ * __useCreateProductMutation__
+ *
+ * To run a mutation, you first call `useCreateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProductMutation, { data, loading, error }] = useCreateProductMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *      price: // value for 'price'
+ *      isAvailable: // value for 'isAvailable'
+ *      imageUrl: // value for 'imageUrl'
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
+      }
+export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
+export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
+export const UpdateProductDocument = gql`
+    mutation updateProduct($name: String, $description: String, $price: Float, $isAvailable: Boolean, $id: ID!) {
+  updateOneProduct(
+    input: {id: $id, update: {name: $name, price: $price, isAvailable: $isAvailable, description: $description}}
+  ) {
+    id
+    name
+    description
+    imageUrl
+    price
+    isAvailable
+    created
+    updated
+  }
+}
+    `;
+export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+
+/**
+ * __useUpdateProductMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMutation, { data, loading, error }] = useUpdateProductMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *      price: // value for 'price'
+ *      isAvailable: // value for 'isAvailable'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+      }
+export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
+export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
 export const AdminProductsDocument = gql`
     query adminProducts($offset: Int) {
   products(paging: {limit: 10, offset: $offset}) {
