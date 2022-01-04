@@ -3,7 +3,7 @@ import { Col, Dropdown, Layout, Menu, Row } from 'antd';
 import Home from '../Home/Home';
 import Products from '../Products/Products';
 
-import { HomeOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, SettingOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import Product from '../Product/Product';
 import Login from '../Login/Login';
 
@@ -11,6 +11,7 @@ import { getUser } from '../../util/authService';
 import SellerCenter from '../SellerCenter/SellerCenter';
 import SellerMenu from './SellerMenu';
 import ManageProducts from '../ManageProducts/ManageProducts';
+import Cart from '../Cart/Cart';
 
 const { Header, Content, Footer } = Layout;
 
@@ -28,6 +29,13 @@ const topNavItems = [
     linkTo: '/login',
     icon: <UserOutlined />,
     requireAuth: true,
+  },
+  {
+    key: 'cart',
+    navLabel: 'Cart',
+    linkTo: '/cart',
+    icon: <ShoppingCartOutlined />,
+    requireAuth: false,
   },
 ];
 
@@ -142,6 +150,7 @@ const LayoutPage = (): JSX.Element => {
           <Route path="/login" element={<Login />} />
           <Route path="/seller" element={<SellerCenter />} />
           <Route path="/products/manage" element={<ManageProducts />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
