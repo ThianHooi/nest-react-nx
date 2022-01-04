@@ -9,11 +9,7 @@ import {
   Dropdown,
   Button,
 } from 'antd';
-import {
-  DownOutlined,
-  EyeOutlined,
-  ShoppingCartOutlined,
-} from '@ant-design/icons';
+import { DownOutlined, EyeOutlined } from '@ant-design/icons';
 
 import { useProductsQuery } from '../../generated/graphql';
 import { appendClientKey } from '../../util/appendImgClientKey';
@@ -152,9 +148,6 @@ const Products: FC<{ idExcluded?: string }> = ({ idExcluded }): JSX.Element => {
                       >
                         <EyeOutlined key="view" />
                       </Link>
-                    </Tooltip>,
-                    <Tooltip title={'Add to Cart'}>
-                      <ShoppingCartOutlined key="addToCart" />
                     </Tooltip>,
                   ]}
                 >
