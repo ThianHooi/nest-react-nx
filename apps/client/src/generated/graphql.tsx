@@ -1291,10 +1291,24 @@ export type ProductQueryVariables = Exact<{
 
 export type ProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, price: number, description: string, imageUrl: string, user: { __typename?: 'User', name: string, id: string } } | null | undefined };
 
+export type FilterProductsQueryVariables = Exact<{
+  isAvailable: Scalars['Boolean'];
+  offset?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  lowerPrice?: InputMaybe<Scalars['Float']>;
+  upperPrice?: InputMaybe<Scalars['Float']>;
+}>;
+
+
+export type FilterProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined }, nodes: Array<{ __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, created: any, updated: any, user: { __typename?: 'User', id: string, name: string } }> } };
+
 export type ProductsQueryVariables = Exact<{
   isAvailable: Scalars['Boolean'];
   offset?: InputMaybe<Scalars['Int']>;
   excludeId?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+  lowerPrice?: InputMaybe<Scalars['Float']>;
+  upperPrice?: InputMaybe<Scalars['Float']>;
 }>;
 
 
@@ -1525,10 +1539,69 @@ export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Pr
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
 export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
-export const ProductsDocument = gql`
-    query products($isAvailable: Boolean!, $offset: Int, $excludeId: ID) {
+export const FilterProductsDocument = gql`
+    query filterProducts($isAvailable: Boolean!, $offset: Int, $name: String, $lowerPrice: Float, $upperPrice: Float) {
   products(
-    filter: {isAvailable: {is: $isAvailable}, id: {neq: $excludeId}}
+    filter: {isAvailable: {is: $isAvailable}, name: {like: $name}, and: [{price: {gte: $lowerPrice}}, {price: {lte: $upperPrice}}]}
+    paging: {limit: 16, offset: $offset}
+  ) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    nodes {
+      id
+      name
+      description
+      imageUrl
+      price
+      user {
+        id
+        name
+      }
+      created
+      updated
+    }
+  }
+}
+    `;
+
+/**
+ * __useFilterProductsQuery__
+ *
+ * To run a query within a React component, call `useFilterProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilterProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilterProductsQuery({
+ *   variables: {
+ *      isAvailable: // value for 'isAvailable'
+ *      offset: // value for 'offset'
+ *      name: // value for 'name'
+ *      lowerPrice: // value for 'lowerPrice'
+ *      upperPrice: // value for 'upperPrice'
+ *   },
+ * });
+ */
+export function useFilterProductsQuery(baseOptions: Apollo.QueryHookOptions<FilterProductsQuery, FilterProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilterProductsQuery, FilterProductsQueryVariables>(FilterProductsDocument, options);
+      }
+export function useFilterProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilterProductsQuery, FilterProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilterProductsQuery, FilterProductsQueryVariables>(FilterProductsDocument, options);
+        }
+export type FilterProductsQueryHookResult = ReturnType<typeof useFilterProductsQuery>;
+export type FilterProductsLazyQueryHookResult = ReturnType<typeof useFilterProductsLazyQuery>;
+export type FilterProductsQueryResult = Apollo.QueryResult<FilterProductsQuery, FilterProductsQueryVariables>;
+export const ProductsDocument = gql`
+    query products($isAvailable: Boolean!, $offset: Int, $excludeId: ID, $name: String, $lowerPrice: Float, $upperPrice: Float) {
+  products(
+    filter: {isAvailable: {is: $isAvailable}, id: {neq: $excludeId}, name: {like: $name}, and: [{price: {gte: $lowerPrice}}, {price: {lte: $upperPrice}}]}
     paging: {limit: 16, offset: $offset}
   ) {
     totalCount
@@ -1568,6 +1641,9 @@ export const ProductsDocument = gql`
  *      isAvailable: // value for 'isAvailable'
  *      offset: // value for 'offset'
  *      excludeId: // value for 'excludeId'
+ *      name: // value for 'name'
+ *      lowerPrice: // value for 'lowerPrice'
+ *      upperPrice: // value for 'upperPrice'
  *   },
  * });
  */
