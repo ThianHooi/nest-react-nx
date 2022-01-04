@@ -1,6 +1,11 @@
-import { EyeOutlined, FileImageOutlined } from '@ant-design/icons';
-import { Button, Space, Table, Tooltip } from 'antd';
 import { FC, CSSProperties, useState, useEffect } from 'react';
+
+import {
+  EyeOutlined,
+  FileImageOutlined,
+  PlusCircleOutlined,
+} from '@ant-design/icons';
+import { Button, Col, Row, Space, Table, Tooltip } from 'antd';
 import { useAdminProductsQuery } from '../../generated/graphql';
 import {
   IOffsetPageInfo,
@@ -8,6 +13,7 @@ import {
   IQueryProduct,
 } from '../../interfaces/interfaces';
 import ViewProductModal from './ViewProductModal';
+import AddProductModal from './CreateProductForm';
 
 const centerStyle: CSSProperties = {
   display: 'flex',
@@ -33,6 +39,7 @@ const ManageProducts: FC = (): JSX.Element => {
     offset: 0,
   });
   const [viewProductVisible, setViewProductVisible] = useState<string | null>();
+  const [addProductVisible, setAddProductVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (!data) {
@@ -131,9 +138,26 @@ const ManageProducts: FC = (): JSX.Element => {
     setSearchParams({ ...searchParams, offset: (page - 1) * pageSize });
   };
 
+  const viewAddProductModal = () => {
+    setAddProductVisible(true);
+  };
+
   return (
     <>
       <h1>Manage Products</h1>
+      <Button
+        onClick={viewAddProductModal}
+        type="primary"
+        icon={<PlusCircleOutlined />}
+      >
+        Add New Product
+      </Button>
+
+      <AddProductModal
+        visible={addProductVisible}
+        onCancel={() => setAddProductVisible(false)}
+      />
+
       <Table
         loading={loading}
         tableLayout={'fixed'}
