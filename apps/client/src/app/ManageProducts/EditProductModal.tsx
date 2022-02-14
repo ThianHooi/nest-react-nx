@@ -60,7 +60,7 @@ const EditProductModal: FC<{
       visible={visible}
       centered
       title={'Add New Product'}
-      okText="Create"
+      okText="Update"
       cancelText={'Cancel'}
       onCancel={onCancel}
       onOk={() =>
