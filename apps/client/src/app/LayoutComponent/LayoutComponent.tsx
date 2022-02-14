@@ -24,6 +24,7 @@ import SellerCenter from '../SellerCenter/SellerCenter';
 import SellerMenu from './SellerMenu';
 import ManageProducts from '../ManageProducts/ManageProducts';
 import Cart from '../Cart/Cart';
+import ManageOrders from '../ManageOrders/ManageOrders';
 
 const { Header, Content, Footer } = Layout;
 
@@ -182,6 +183,7 @@ const LayoutPage = (): JSX.Element => {
           <Route path="/login" element={<Login />} />
           <Route path="/seller" element={<SellerCenter />} />
           <Route path="/products/manage" element={<ManageProducts />} />
+          <Route path="/orders/manage" element={<ManageOrders />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
       </Content>

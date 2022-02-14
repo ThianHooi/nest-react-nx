@@ -7,6 +7,9 @@ const SellerMenu = (
     <Menu.Item>
       <Link to={`/products/manage`}>Manage Products</Link>
     </Menu.Item>
+    <Menu.Item>
+      <Link to={`/orders/manage`}>Orders</Link>
+    </Menu.Item>
   </Menu>
 );
 
