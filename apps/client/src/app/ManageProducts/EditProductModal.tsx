@@ -39,7 +39,7 @@ const EditProductModal: FC<{
   const handleSubmit = async (formValues: IProductInput) => {
     try {
       const { data } = await postUpdateProduct({
-        variables: { ...formValues, id: user.id },
+        variables: { ...formValues },
       });
 
       const { product } = data;
@@ -81,6 +81,10 @@ const EditProductModal: FC<{
         layout="horizontal"
         initialValues={product}
       >
+        <Form.Item name="id" label="Product ID" hidden>
+          <Input />
+        </Form.Item>
+
         <Form.Item
           name="name"
           label="Product Name"
