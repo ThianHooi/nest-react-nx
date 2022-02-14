@@ -2,10 +2,16 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -38,24 +44,9 @@ export type BooleanFieldComparison = {
   isNot?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type CreateManyOrderProductsInput = {
-  /** Array of records to create */
-  orderProducts: Array<CreateOrderProduct>;
-};
-
 export type CreateManyOrdersInput = {
   /** Array of records to create */
   orders: Array<CreateOrder>;
-};
-
-export type CreateManyProductsInput = {
-  /** Array of records to create */
-  products: Array<CreateProduct>;
-};
-
-export type CreateOneOrderInput = {
-  /** The record to create */
-  order: CreateOrder;
 };
 
 export type CreateOneOrderProductInput = {
@@ -119,42 +110,6 @@ export type CursorPaging = {
   last?: InputMaybe<Scalars['Int']>;
 };
 
-export type DeleteManyOrderProductsInput = {
-  /** Filter to find records to delete */
-  filter: OrderProductDeleteFilter;
-};
-
-export type DeleteManyOrdersInput = {
-  /** Filter to find records to delete */
-  filter: OrderDeleteFilter;
-};
-
-export type DeleteManyProductsInput = {
-  /** Filter to find records to delete */
-  filter: ProductDeleteFilter;
-};
-
-export type DeleteManyResponse = {
-  __typename?: 'DeleteManyResponse';
-  /** The number of records deleted. */
-  deletedCount: Scalars['Int'];
-};
-
-export type DeleteOneOrderInput = {
-  /** The id of the record to delete. */
-  id: Scalars['ID'];
-};
-
-export type DeleteOneOrderProductInput = {
-  /** The id of the record to delete. */
-  id: Scalars['ID'];
-};
-
-export type DeleteOneProductInput = {
-  /** The id of the record to delete. */
-  id: Scalars['ID'];
-};
-
 export type DeleteOneUserInput = {
   /** The id of the record to delete. */
   id: Scalars['ID'];
@@ -192,20 +147,11 @@ export type Mutation = {
   __typename?: 'Mutation';
   addOrderProductsToOrder: Order;
   addProductsToUser: User;
-  createManyOrderProducts: Array<OrderProduct>;
   createManyOrders: Array<Order>;
-  createManyProducts: Array<Product>;
-  createOneOrder: Order;
   createOneOrderProduct: OrderProduct;
   createOneProduct: Product;
   createOrder: Order;
   createUser: User;
-  deleteManyOrderProducts: DeleteManyResponse;
-  deleteManyOrders: DeleteManyResponse;
-  deleteManyProducts: DeleteManyResponse;
-  deleteOneOrder: OrderDeleteResponse;
-  deleteOneOrderProduct: OrderProductDeleteResponse;
-  deleteOneProduct: ProductDeleteResponse;
   deleteOneUser: UserDeleteResponse;
   login: LoginResponse;
   setOrderIdOnOrderProduct: OrderProduct;
@@ -214,165 +160,78 @@ export type Mutation = {
   setProductsOnUser: User;
   setUserOnOrder: Order;
   setUserOnProduct: Product;
-  updateManyOrderProducts: UpdateManyResponse;
-  updateManyOrders: UpdateManyResponse;
-  updateManyProducts: UpdateManyResponse;
-  updateOneOrder: Order;
   updateOneOrderProduct: OrderProduct;
   updateOneProduct: Product;
   updateOneUser: User;
 };
 
-
 export type MutationAddOrderProductsToOrderArgs = {
   input: AddOrderProductsToOrderInput;
 };
-
 
 export type MutationAddProductsToUserArgs = {
   input: AddProductsToUserInput;
 };
 
-
-export type MutationCreateManyOrderProductsArgs = {
-  input: CreateManyOrderProductsInput;
-};
-
-
 export type MutationCreateManyOrdersArgs = {
   input: CreateManyOrdersInput;
 };
-
-
-export type MutationCreateManyProductsArgs = {
-  input: CreateManyProductsInput;
-};
-
-
-export type MutationCreateOneOrderArgs = {
-  input: CreateOneOrderInput;
-};
-
 
 export type MutationCreateOneOrderProductArgs = {
   input: CreateOneOrderProductInput;
 };
 
-
 export type MutationCreateOneProductArgs = {
   input: CreateOneProductInput;
 };
-
 
 export type MutationCreateOrderArgs = {
   input: OrderInputDto;
 };
 
-
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
 };
-
-
-export type MutationDeleteManyOrderProductsArgs = {
-  input: DeleteManyOrderProductsInput;
-};
-
-
-export type MutationDeleteManyOrdersArgs = {
-  input: DeleteManyOrdersInput;
-};
-
-
-export type MutationDeleteManyProductsArgs = {
-  input: DeleteManyProductsInput;
-};
-
-
-export type MutationDeleteOneOrderArgs = {
-  input: DeleteOneOrderInput;
-};
-
-
-export type MutationDeleteOneOrderProductArgs = {
-  input: DeleteOneOrderProductInput;
-};
-
-
-export type MutationDeleteOneProductArgs = {
-  input: DeleteOneProductInput;
-};
-
 
 export type MutationDeleteOneUserArgs = {
   input: DeleteOneUserInput;
 };
 
-
 export type MutationLoginArgs = {
   input: LoginUserInput;
 };
-
 
 export type MutationSetOrderIdOnOrderProductArgs = {
   input: SetOrderIdOnOrderProductInput;
 };
 
-
 export type MutationSetOrderProductsOnOrderArgs = {
   input: SetOrderProductsOnOrderInput;
 };
-
 
 export type MutationSetProductIdOnOrderProductArgs = {
   input: SetProductIdOnOrderProductInput;
 };
 
-
 export type MutationSetProductsOnUserArgs = {
   input: SetProductsOnUserInput;
 };
-
 
 export type MutationSetUserOnOrderArgs = {
   input: SetUserOnOrderInput;
 };
 
-
 export type MutationSetUserOnProductArgs = {
   input: SetUserOnProductInput;
 };
-
-
-export type MutationUpdateManyOrderProductsArgs = {
-  input: UpdateManyOrderProductsInput;
-};
-
-
-export type MutationUpdateManyOrdersArgs = {
-  input: UpdateManyOrdersInput;
-};
-
-
-export type MutationUpdateManyProductsArgs = {
-  input: UpdateManyProductsInput;
-};
-
-
-export type MutationUpdateOneOrderArgs = {
-  input: UpdateOneOrderInput;
-};
-
 
 export type MutationUpdateOneOrderProductArgs = {
   input: UpdateOneOrderProductInput;
 };
 
-
 export type MutationUpdateOneProductArgs = {
   input: UpdateOneProductInput;
 };
-
 
 export type MutationUpdateOneUserArgs = {
   input: UpdateOneUserInput;
@@ -424,7 +283,6 @@ export type Order = {
   user: User;
 };
 
-
 export type OrderOrderProductsArgs = {
   filter?: InputMaybe<OrderProductFilter>;
   sorting?: InputMaybe<Array<OrderProductSort>>;
@@ -445,10 +303,12 @@ export type OrderAvgAggregate = {
 
 export type OrderConnection = {
   __typename?: 'OrderConnection';
-  /** Array of edges. */
-  edges: Array<OrderEdge>;
+  /** Array of nodes. */
+  nodes: Array<Order>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type OrderCountAggregate = {
@@ -456,32 +316,6 @@ export type OrderCountAggregate = {
   id?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   user?: Maybe<Scalars['Int']>;
-};
-
-export type OrderDeleteFilter = {
-  and?: InputMaybe<Array<OrderDeleteFilter>>;
-  id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<OrderDeleteFilter>>;
-  status?: InputMaybe<StringFieldComparison>;
-  user?: InputMaybe<NumberFieldComparison>;
-};
-
-export type OrderDeleteResponse = {
-  __typename?: 'OrderDeleteResponse';
-  created?: Maybe<Scalars['DateTime']>;
-  id?: Maybe<Scalars['ID']>;
-  price?: Maybe<Scalars['Float']>;
-  status?: Maybe<Scalars['String']>;
-  updated?: Maybe<Scalars['DateTime']>;
-  user?: Maybe<Scalars['Float']>;
-};
-
-export type OrderEdge = {
-  __typename?: 'OrderEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the Order */
-  node: Order;
 };
 
 export type OrderFilter = {
@@ -578,10 +412,12 @@ export type OrderProductAvgAggregate = {
 
 export type OrderProductConnection = {
   __typename?: 'OrderProductConnection';
-  /** Array of edges. */
-  edges: Array<OrderProductEdge>;
+  /** Array of nodes. */
+  nodes: Array<OrderProduct>;
   /** Paging information */
-  pageInfo: PageInfo;
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type OrderProductCountAggregate = {
@@ -592,37 +428,6 @@ export type OrderProductCountAggregate = {
   quantity?: Maybe<Scalars['Int']>;
   totalPrice?: Maybe<Scalars['Int']>;
   unitPrice?: Maybe<Scalars['Int']>;
-};
-
-export type OrderProductDeleteFilter = {
-  and?: InputMaybe<Array<OrderProductDeleteFilter>>;
-  id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<OrderProductDeleteFilter>>;
-  orderId?: InputMaybe<NumberFieldComparison>;
-  productId?: InputMaybe<NumberFieldComparison>;
-  quantity?: InputMaybe<NumberFieldComparison>;
-  totalPrice?: InputMaybe<NumberFieldComparison>;
-  unitPrice?: InputMaybe<NumberFieldComparison>;
-};
-
-export type OrderProductDeleteResponse = {
-  __typename?: 'OrderProductDeleteResponse';
-  created?: Maybe<Scalars['DateTime']>;
-  id?: Maybe<Scalars['ID']>;
-  orderId?: Maybe<Scalars['Float']>;
-  productId?: Maybe<Scalars['Float']>;
-  quantity?: Maybe<Scalars['Float']>;
-  totalPrice?: Maybe<Scalars['Float']>;
-  unitPrice?: Maybe<Scalars['Float']>;
-  updated?: Maybe<Scalars['DateTime']>;
-};
-
-export type OrderProductEdge = {
-  __typename?: 'OrderProductEdge';
-  /** Cursor for this node. */
-  cursor: Scalars['ConnectionCursor'];
-  /** The node containing the OrderProduct */
-  node: OrderProduct;
 };
 
 export type OrderProductFilter = {
@@ -675,7 +480,7 @@ export enum OrderProductSortFields {
   ProductId = 'productId',
   Quantity = 'quantity',
   TotalPrice = 'totalPrice',
-  UnitPrice = 'unitPrice'
+  UnitPrice = 'unitPrice',
 }
 
 export type OrderProductSumAggregate = {
@@ -688,17 +493,6 @@ export type OrderProductSumAggregate = {
   unitPrice?: Maybe<Scalars['Float']>;
 };
 
-export type OrderProductUpdateFilter = {
-  and?: InputMaybe<Array<OrderProductUpdateFilter>>;
-  id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<OrderProductUpdateFilter>>;
-  orderId?: InputMaybe<NumberFieldComparison>;
-  productId?: InputMaybe<NumberFieldComparison>;
-  quantity?: InputMaybe<NumberFieldComparison>;
-  totalPrice?: InputMaybe<NumberFieldComparison>;
-  unitPrice?: InputMaybe<NumberFieldComparison>;
-};
-
 export type OrderSort = {
   direction: SortDirection;
   field: OrderSortFields;
@@ -708,21 +502,13 @@ export type OrderSort = {
 export enum OrderSortFields {
   Id = 'id',
   Status = 'status',
-  User = 'user'
+  User = 'user',
 }
 
 export type OrderSumAggregate = {
   __typename?: 'OrderSumAggregate';
   id?: Maybe<Scalars['Float']>;
   user?: Maybe<Scalars['Float']>;
-};
-
-export type OrderUpdateFilter = {
-  and?: InputMaybe<Array<OrderUpdateFilter>>;
-  id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<OrderUpdateFilter>>;
-  status?: InputMaybe<StringFieldComparison>;
-  user?: InputMaybe<NumberFieldComparison>;
 };
 
 export type PageInfo = {
@@ -792,33 +578,6 @@ export type ProductCountAggregate = {
   user?: Maybe<Scalars['Int']>;
 };
 
-export type ProductDeleteFilter = {
-  and?: InputMaybe<Array<ProductDeleteFilter>>;
-  description?: InputMaybe<StringFieldComparison>;
-  id?: InputMaybe<IdFilterComparison>;
-  imageUrl?: InputMaybe<StringFieldComparison>;
-  isAvailable?: InputMaybe<BooleanFieldComparison>;
-  name?: InputMaybe<StringFieldComparison>;
-  or?: InputMaybe<Array<ProductDeleteFilter>>;
-  price?: InputMaybe<NumberFieldComparison>;
-  type?: InputMaybe<StringFieldComparison>;
-  user?: InputMaybe<NumberFieldComparison>;
-};
-
-export type ProductDeleteResponse = {
-  __typename?: 'ProductDeleteResponse';
-  created?: Maybe<Scalars['DateTime']>;
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['ID']>;
-  imageUrl?: Maybe<Scalars['String']>;
-  isAvailable?: Maybe<Scalars['Boolean']>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
-  type?: Maybe<Scalars['String']>;
-  updated?: Maybe<Scalars['DateTime']>;
-  user?: Maybe<Scalars['Float']>;
-};
-
 export type ProductFilter = {
   and?: InputMaybe<Array<ProductFilter>>;
   description?: InputMaybe<StringFieldComparison>;
@@ -868,7 +627,7 @@ export enum ProductSortFields {
   Name = 'name',
   Price = 'price',
   Type = 'type',
-  User = 'user'
+  User = 'user',
 }
 
 export type ProductSumAggregate = {
@@ -876,19 +635,6 @@ export type ProductSumAggregate = {
   id?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   user?: Maybe<Scalars['Float']>;
-};
-
-export type ProductUpdateFilter = {
-  and?: InputMaybe<Array<ProductUpdateFilter>>;
-  description?: InputMaybe<StringFieldComparison>;
-  id?: InputMaybe<IdFilterComparison>;
-  imageUrl?: InputMaybe<StringFieldComparison>;
-  isAvailable?: InputMaybe<BooleanFieldComparison>;
-  name?: InputMaybe<StringFieldComparison>;
-  or?: InputMaybe<Array<ProductUpdateFilter>>;
-  price?: InputMaybe<NumberFieldComparison>;
-  type?: InputMaybe<StringFieldComparison>;
-  user?: InputMaybe<NumberFieldComparison>;
 };
 
 export type Query = {
@@ -904,40 +650,33 @@ export type Query = {
   users: UserConnection;
 };
 
-
 export type QueryOrderArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryOrderProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type QueryOrderProductAggregateArgs = {
   filter?: InputMaybe<OrderProductAggregateFilter>;
 };
 
-
 export type QueryOrderProductsArgs = {
   filter?: InputMaybe<OrderProductFilter>;
-  paging?: InputMaybe<CursorPaging>;
+  paging?: InputMaybe<OffsetPaging>;
   sorting?: InputMaybe<Array<OrderProductSort>>;
 };
 
-
 export type QueryOrdersArgs = {
   filter?: InputMaybe<OrderFilter>;
-  paging?: InputMaybe<CursorPaging>;
+  paging?: InputMaybe<OffsetPaging>;
   sorting?: InputMaybe<Array<OrderSort>>;
 };
-
 
 export type QueryProductArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryProductsArgs = {
   filter?: InputMaybe<ProductFilter>;
@@ -945,11 +684,9 @@ export type QueryProductsArgs = {
   sorting?: InputMaybe<Array<ProductSort>>;
 };
 
-
 export type QueryUserArgs = {
   id: Scalars['ID'];
 };
-
 
 export type QueryUsersArgs = {
   filter?: InputMaybe<UserFilter>;
@@ -1002,13 +739,13 @@ export type SetUserOnProductInput = {
 /** Sort Directions */
 export enum SortDirection {
   Asc = 'ASC',
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 /** Sort Nulls Options */
 export enum SortNulls {
   NullsFirst = 'NULLS_FIRST',
-  NullsLast = 'NULLS_LAST'
+  NullsLast = 'NULLS_LAST',
 }
 
 export type StringFieldComparison = {
@@ -1026,40 +763,6 @@ export type StringFieldComparison = {
   notILike?: InputMaybe<Scalars['String']>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   notLike?: InputMaybe<Scalars['String']>;
-};
-
-export type UpdateManyOrderProductsInput = {
-  /** Filter used to find fields to update */
-  filter: OrderProductUpdateFilter;
-  /** The update to apply to all records found using the filter */
-  update: UpdateOrderProduct;
-};
-
-export type UpdateManyOrdersInput = {
-  /** Filter used to find fields to update */
-  filter: OrderUpdateFilter;
-  /** The update to apply to all records found using the filter */
-  update: UpdateOrder;
-};
-
-export type UpdateManyProductsInput = {
-  /** Filter used to find fields to update */
-  filter: ProductUpdateFilter;
-  /** The update to apply to all records found using the filter */
-  update: UpdateProduct;
-};
-
-export type UpdateManyResponse = {
-  __typename?: 'UpdateManyResponse';
-  /** The number of records updated. */
-  updatedCount: Scalars['Int'];
-};
-
-export type UpdateOneOrderInput = {
-  /** The id of the record to update */
-  id: Scalars['ID'];
-  /** The update to apply. */
-  update: UpdateOrder;
 };
 
 export type UpdateOneOrderProductInput = {
@@ -1081,15 +784,6 @@ export type UpdateOneUserInput = {
   id: Scalars['ID'];
   /** The update to apply. */
   update: UpdateUser;
-};
-
-export type UpdateOrder = {
-  created?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['ID']>;
-  price?: InputMaybe<Scalars['Float']>;
-  status?: InputMaybe<Scalars['String']>;
-  updated?: InputMaybe<Scalars['DateTime']>;
-  user?: InputMaybe<Scalars['Float']>;
 };
 
 export type UpdateOrderProduct = {
@@ -1135,7 +829,6 @@ export type User = {
   role: Scalars['String'];
   updated: Scalars['DateTime'];
 };
-
 
 export type UserProductsArgs = {
   filter?: InputMaybe<ProductFilter>;
@@ -1238,7 +931,7 @@ export enum UserSortFields {
   Email = 'email',
   Id = 'id',
   Name = 'name',
-  Role = 'role'
+  Role = 'role',
 }
 
 export type UserSumAggregate = {
@@ -1251,16 +944,78 @@ export type CreateOrderMutationVariables = Exact<{
   input?: InputMaybe<Array<OrderProductInput> | OrderProductInput>;
 }>;
 
-
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id: string, status: string, price: number, user: { __typename?: 'User', name: string, id: string }, orderProducts: Array<{ __typename?: 'OrderProduct', id: string, quantity: number, unitPrice: number, totalPrice: number, productId: { __typename?: 'Product', name: string, imageUrl: string } }> } };
+export type CreateOrderMutation = {
+  __typename?: 'Mutation';
+  createOrder: {
+    __typename?: 'Order';
+    id: string;
+    status: string;
+    price: number;
+    user: { __typename?: 'User'; name: string; id: string };
+    orderProducts: Array<{
+      __typename?: 'OrderProduct';
+      id: string;
+      quantity: number;
+      unitPrice: number;
+      totalPrice: number;
+      productId: { __typename?: 'Product'; name: string; imageUrl: string };
+    }>;
+  };
+};
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
+export type LoginMutation = {
+  __typename?: 'Mutation';
+  login: {
+    __typename?: 'LoginResponse';
+    access_token: string;
+    user: { __typename?: 'User'; id: string; name: string; role: string };
+  };
+};
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', access_token: string, user: { __typename?: 'User', id: string, name: string, role: string } } };
+export type OrdersQueryVariables = Exact<{
+  offset?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type OrdersQuery = {
+  __typename?: 'Query';
+  orders: {
+    __typename?: 'OrderConnection';
+    totalCount: number;
+    pageInfo: {
+      __typename?: 'OffsetPageInfo';
+      hasNextPage?: boolean | null | undefined;
+      hasPreviousPage?: boolean | null | undefined;
+    };
+    nodes: Array<{
+      __typename?: 'Order';
+      id: string;
+      price: number;
+      created: any;
+      user: { __typename?: 'User'; id: string; name: string; email: string };
+      orderProducts: Array<{
+        __typename?: 'OrderProduct';
+        id: string;
+        quantity: number;
+        unitPrice: number;
+        totalPrice: number;
+        productId: {
+          __typename?: 'Product';
+          id: string;
+          price: number;
+          name: string;
+          description: string;
+          imageUrl: string;
+          isAvailable: boolean;
+        };
+      }>;
+    }>;
+  };
+};
 
 export type CreateProductMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
@@ -1271,8 +1026,20 @@ export type CreateProductMutationVariables = Exact<{
   user: Scalars['Float'];
 }>;
 
-
-export type CreateProductMutation = { __typename?: 'Mutation', createOneProduct: { __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, isAvailable: boolean, created: any, updated: any } };
+export type CreateProductMutation = {
+  __typename?: 'Mutation';
+  createOneProduct: {
+    __typename?: 'Product';
+    id: string;
+    name: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    isAvailable: boolean;
+    created: any;
+    updated: any;
+  };
+};
 
 export type UpdateProductMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
@@ -1282,22 +1049,68 @@ export type UpdateProductMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type UpdateProductMutation = { __typename?: 'Mutation', updateOneProduct: { __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, isAvailable: boolean, created: any, updated: any } };
+export type UpdateProductMutation = {
+  __typename?: 'Mutation';
+  updateOneProduct: {
+    __typename?: 'Product';
+    id: string;
+    name: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    isAvailable: boolean;
+    created: any;
+    updated: any;
+  };
+};
 
 export type AdminProductsQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
 }>;
 
-
-export type AdminProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined }, nodes: Array<{ __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, isAvailable: boolean, created: any, updated: any }> } };
+export type AdminProductsQuery = {
+  __typename?: 'Query';
+  products: {
+    __typename?: 'ProductConnection';
+    totalCount: number;
+    pageInfo: {
+      __typename?: 'OffsetPageInfo';
+      hasNextPage?: boolean | null | undefined;
+      hasPreviousPage?: boolean | null | undefined;
+    };
+    nodes: Array<{
+      __typename?: 'Product';
+      id: string;
+      name: string;
+      description: string;
+      imageUrl: string;
+      price: number;
+      isAvailable: boolean;
+      created: any;
+      updated: any;
+    }>;
+  };
+};
 
 export type ProductQueryVariables = Exact<{
   productId: Scalars['ID'];
 }>;
 
-
-export type ProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, price: number, description: string, imageUrl: string, user: { __typename?: 'User', name: string, id: string } } | null | undefined };
+export type ProductQuery = {
+  __typename?: 'Query';
+  product?:
+    | {
+        __typename?: 'Product';
+        id: string;
+        name: string;
+        price: number;
+        description: string;
+        imageUrl: string;
+        user: { __typename?: 'User'; name: string; id: string };
+      }
+    | null
+    | undefined;
+};
 
 export type ProductsQueryVariables = Exact<{
   isAvailable: Scalars['Boolean'];
@@ -1308,34 +1121,57 @@ export type ProductsQueryVariables = Exact<{
   upperPrice?: InputMaybe<Scalars['Float']>;
 }>;
 
-
-export type ProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductConnection', totalCount: number, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null | undefined, hasPreviousPage?: boolean | null | undefined }, nodes: Array<{ __typename?: 'Product', id: string, name: string, description: string, imageUrl: string, price: number, created: any, updated: any, user: { __typename?: 'User', id: string, name: string } }> } };
-
+export type ProductsQuery = {
+  __typename?: 'Query';
+  products: {
+    __typename?: 'ProductConnection';
+    totalCount: number;
+    pageInfo: {
+      __typename?: 'OffsetPageInfo';
+      hasNextPage?: boolean | null | undefined;
+      hasPreviousPage?: boolean | null | undefined;
+    };
+    nodes: Array<{
+      __typename?: 'Product';
+      id: string;
+      name: string;
+      description: string;
+      imageUrl: string;
+      price: number;
+      created: any;
+      updated: any;
+      user: { __typename?: 'User'; id: string; name: string };
+    }>;
+  };
+};
 
 export const CreateOrderDocument = gql`
-    mutation createOrder($user: Float!, $input: [OrderProductInput!]) {
-  createOrder(input: {user: $user, orderItems: $input}) {
-    id
-    status
-    price
-    user {
-      name
+  mutation createOrder($user: Float!, $input: [OrderProductInput!]) {
+    createOrder(input: { user: $user, orderItems: $input }) {
       id
-    }
-    orderProducts {
-      id
-      quantity
-      unitPrice
-      totalPrice
-      productId {
+      status
+      price
+      user {
         name
-        imageUrl
+        id
+      }
+      orderProducts {
+        id
+        quantity
+        unitPrice
+        totalPrice
+        productId {
+          name
+          imageUrl
+        }
       }
     }
   }
-}
-    `;
-export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
+`;
+export type CreateOrderMutationFn = Apollo.MutationFunction<
+  CreateOrderMutation,
+  CreateOrderMutationVariables
+>;
 
 /**
  * __useCreateOrderMutation__
@@ -1355,26 +1191,43 @@ export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation,
  *   },
  * });
  */
-export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
-      }
-export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
-export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
-export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
+export function useCreateOrderMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateOrderMutation,
+    CreateOrderMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(
+    CreateOrderDocument,
+    options
+  );
+}
+export type CreateOrderMutationHookResult = ReturnType<
+  typeof useCreateOrderMutation
+>;
+export type CreateOrderMutationResult =
+  Apollo.MutationResult<CreateOrderMutation>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<
+  CreateOrderMutation,
+  CreateOrderMutationVariables
+>;
 export const LoginDocument = gql`
-    mutation login($email: String!, $password: String!) {
-  login(input: {email: $email, password: $password}) {
-    access_token
-    user {
-      id
-      name
-      role
+  mutation login($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      access_token
+      user {
+        id
+        name
+        role
+      }
     }
   }
-}
-    `;
-export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+`;
+export type LoginMutationFn = Apollo.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
 
 /**
  * __useLoginMutation__
@@ -1394,30 +1247,137 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  *   },
  * });
  */
-export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
-      }
+export function useLoginMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    options
+  );
+}
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
-export const CreateProductDocument = gql`
-    mutation createProduct($name: String, $description: String, $price: Float, $isAvailable: Boolean, $imageUrl: String, $user: Float!) {
-  createOneProduct(
-    input: {product: {name: $name, price: $price, isAvailable: $isAvailable, description: $description, imageUrl: $imageUrl, user: $user, type: "tech"}}
-  ) {
-    id
-    name
-    description
-    imageUrl
-    price
-    isAvailable
-    created
-    updated
+export type LoginMutationOptions = Apollo.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
+>;
+export const OrdersDocument = gql`
+  query orders($offset: Int) {
+    orders(paging: { limit: 10, offset: $offset }) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      nodes {
+        id
+        price
+        created
+        user {
+          id
+          name
+          email
+        }
+        orderProducts {
+          id
+          quantity
+          unitPrice
+          totalPrice
+          productId {
+            id
+            price
+            name
+            description
+            imageUrl
+            isAvailable
+          }
+        }
+      }
+    }
   }
+`;
+
+/**
+ * __useOrdersQuery__
+ *
+ * To run a query within a React component, call `useOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrdersQuery({
+ *   variables: {
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useOrdersQuery(
+  baseOptions?: Apollo.QueryHookOptions<OrdersQuery, OrdersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<OrdersQuery, OrdersQueryVariables>(
+    OrdersDocument,
+    options
+  );
 }
-    `;
-export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+export function useOrdersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<OrdersQuery, OrdersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<OrdersQuery, OrdersQueryVariables>(
+    OrdersDocument,
+    options
+  );
+}
+export type OrdersQueryHookResult = ReturnType<typeof useOrdersQuery>;
+export type OrdersLazyQueryHookResult = ReturnType<typeof useOrdersLazyQuery>;
+export type OrdersQueryResult = Apollo.QueryResult<
+  OrdersQuery,
+  OrdersQueryVariables
+>;
+export const CreateProductDocument = gql`
+  mutation createProduct(
+    $name: String
+    $description: String
+    $price: Float
+    $isAvailable: Boolean
+    $imageUrl: String
+    $user: Float!
+  ) {
+    createOneProduct(
+      input: {
+        product: {
+          name: $name
+          price: $price
+          isAvailable: $isAvailable
+          description: $description
+          imageUrl: $imageUrl
+          user: $user
+          type: "tech"
+        }
+      }
+    ) {
+      id
+      name
+      description
+      imageUrl
+      price
+      isAvailable
+      created
+      updated
+    }
+  }
+`;
+export type CreateProductMutationFn = Apollo.MutationFunction<
+  CreateProductMutation,
+  CreateProductMutationVariables
+>;
 
 /**
  * __useCreateProductMutation__
@@ -1441,30 +1401,61 @@ export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutat
  *   },
  * });
  */
-export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
-      }
-export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
-export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
-export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
-export const UpdateProductDocument = gql`
-    mutation updateProduct($name: String, $description: String, $price: Float, $isAvailable: Boolean, $id: ID!) {
-  updateOneProduct(
-    input: {id: $id, update: {name: $name, price: $price, isAvailable: $isAvailable, description: $description}}
-  ) {
-    id
-    name
-    description
-    imageUrl
-    price
-    isAvailable
-    created
-    updated
-  }
+export function useCreateProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateProductMutation,
+    CreateProductMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateProductMutation,
+    CreateProductMutationVariables
+  >(CreateProductDocument, options);
 }
-    `;
-export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+export type CreateProductMutationHookResult = ReturnType<
+  typeof useCreateProductMutation
+>;
+export type CreateProductMutationResult =
+  Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<
+  CreateProductMutation,
+  CreateProductMutationVariables
+>;
+export const UpdateProductDocument = gql`
+  mutation updateProduct(
+    $name: String
+    $description: String
+    $price: Float
+    $isAvailable: Boolean
+    $id: ID!
+  ) {
+    updateOneProduct(
+      input: {
+        id: $id
+        update: {
+          name: $name
+          price: $price
+          isAvailable: $isAvailable
+          description: $description
+        }
+      }
+    ) {
+      id
+      name
+      description
+      imageUrl
+      price
+      isAvailable
+      created
+      updated
+    }
+  }
+`;
+export type UpdateProductMutationFn = Apollo.MutationFunction<
+  UpdateProductMutation,
+  UpdateProductMutationVariables
+>;
 
 /**
  * __useUpdateProductMutation__
@@ -1487,34 +1478,48 @@ export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutat
  *   },
  * });
  */
-export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
-      }
-export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
-export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
-export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
+export function useUpdateProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateProductMutation,
+    UpdateProductMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateProductMutation,
+    UpdateProductMutationVariables
+  >(UpdateProductDocument, options);
+}
+export type UpdateProductMutationHookResult = ReturnType<
+  typeof useUpdateProductMutation
+>;
+export type UpdateProductMutationResult =
+  Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<
+  UpdateProductMutation,
+  UpdateProductMutationVariables
+>;
 export const AdminProductsDocument = gql`
-    query adminProducts($offset: Int) {
-  products(paging: {limit: 10, offset: $offset}) {
-    totalCount
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-    }
-    nodes {
-      id
-      name
-      description
-      imageUrl
-      price
-      isAvailable
-      created
-      updated
+  query adminProducts($offset: Int) {
+    products(paging: { limit: 10, offset: $offset }) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      nodes {
+        id
+        name
+        description
+        imageUrl
+        price
+        isAvailable
+        created
+        updated
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useAdminProductsQuery__
@@ -1532,32 +1537,55 @@ export const AdminProductsDocument = gql`
  *   },
  * });
  */
-export function useAdminProductsQuery(baseOptions?: Apollo.QueryHookOptions<AdminProductsQuery, AdminProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AdminProductsQuery, AdminProductsQueryVariables>(AdminProductsDocument, options);
-      }
-export function useAdminProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdminProductsQuery, AdminProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AdminProductsQuery, AdminProductsQueryVariables>(AdminProductsDocument, options);
-        }
-export type AdminProductsQueryHookResult = ReturnType<typeof useAdminProductsQuery>;
-export type AdminProductsLazyQueryHookResult = ReturnType<typeof useAdminProductsLazyQuery>;
-export type AdminProductsQueryResult = Apollo.QueryResult<AdminProductsQuery, AdminProductsQueryVariables>;
+export function useAdminProductsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    AdminProductsQuery,
+    AdminProductsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AdminProductsQuery, AdminProductsQueryVariables>(
+    AdminProductsDocument,
+    options
+  );
+}
+export function useAdminProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AdminProductsQuery,
+    AdminProductsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AdminProductsQuery, AdminProductsQueryVariables>(
+    AdminProductsDocument,
+    options
+  );
+}
+export type AdminProductsQueryHookResult = ReturnType<
+  typeof useAdminProductsQuery
+>;
+export type AdminProductsLazyQueryHookResult = ReturnType<
+  typeof useAdminProductsLazyQuery
+>;
+export type AdminProductsQueryResult = Apollo.QueryResult<
+  AdminProductsQuery,
+  AdminProductsQueryVariables
+>;
 export const ProductDocument = gql`
-    query product($productId: ID!) {
-  product(id: $productId) {
-    id
-    name
-    price
-    description
-    imageUrl
-    user {
-      name
+  query product($productId: ID!) {
+    product(id: $productId) {
       id
+      name
+      price
+      description
+      imageUrl
+      user {
+        name
+        id
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useProductQuery__
@@ -1575,44 +1603,69 @@ export const ProductDocument = gql`
  *   },
  * });
  */
-export function useProductQuery(baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
-      }
-export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
-        }
+export function useProductQuery(
+  baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProductQuery, ProductQueryVariables>(
+    ProductDocument,
+    options
+  );
+}
+export function useProductLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(
+    ProductDocument,
+    options
+  );
+}
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
-export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
+export type ProductQueryResult = Apollo.QueryResult<
+  ProductQuery,
+  ProductQueryVariables
+>;
 export const ProductsDocument = gql`
-    query products($isAvailable: Boolean!, $offset: Int, $excludeId: ID, $name: String, $lowerPrice: Float, $upperPrice: Float) {
-  products(
-    filter: {isAvailable: {is: $isAvailable}, id: {neq: $excludeId}, name: {like: $name}, and: [{price: {gte: $lowerPrice}}, {price: {lte: $upperPrice}}]}
-    paging: {limit: 16, offset: $offset}
+  query products(
+    $isAvailable: Boolean!
+    $offset: Int
+    $excludeId: ID
+    $name: String
+    $lowerPrice: Float
+    $upperPrice: Float
   ) {
-    totalCount
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-    }
-    nodes {
-      id
-      name
-      description
-      imageUrl
-      price
-      user {
+    products(
+      filter: {
+        isAvailable: { is: $isAvailable }
+        id: { neq: $excludeId }
+        name: { like: $name }
+        and: [{ price: { gte: $lowerPrice } }, { price: { lte: $upperPrice } }]
+      }
+      paging: { limit: 16, offset: $offset }
+    ) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      nodes {
         id
         name
+        description
+        imageUrl
+        price
+        user {
+          id
+          name
+        }
+        created
+        updated
       }
-      created
-      updated
     }
   }
-}
-    `;
+`;
 
 /**
  * __useProductsQuery__
@@ -1635,14 +1688,32 @@ export const ProductsDocument = gql`
  *   },
  * });
  */
-export function useProductsQuery(baseOptions: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
-      }
-export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
-        }
+export function useProductsQuery(
+  baseOptions: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(
+    ProductsDocument,
+    options
+  );
+}
+export function useProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ProductsQuery,
+    ProductsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(
+    ProductsDocument,
+    options
+  );
+}
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
-export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
-export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export type ProductsLazyQueryHookResult = ReturnType<
+  typeof useProductsLazyQuery
+>;
+export type ProductsQueryResult = Apollo.QueryResult<
+  ProductsQuery,
+  ProductsQueryVariables
+>;
