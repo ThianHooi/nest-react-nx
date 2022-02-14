@@ -68,3 +68,34 @@ export interface IProductInput {
   isAvailable: boolean;
   user: number;
 }
+
+export interface IOrder {
+  __typename?: 'Order';
+  id: string;
+  price: number;
+  created: any;
+  user: { __typename?: 'User'; id: string; name: string; email: string };
+  orderProducts: Array<{
+    __typename?: 'OrderProduct';
+    id: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    productId: {
+      __typename?: 'Product';
+      id: string;
+      price: number;
+      name: string;
+      description: string;
+      imageUrl: string;
+      isAvailable: boolean;
+    };
+  }>;
+}
+
+export interface IUser {
+  __typename?: 'User';
+  id: string;
+  name: string;
+  email: string;
+}
