@@ -144,6 +144,7 @@ const ManageProducts: FC = (): JSX.Element => {
             product={record}
             visible={editProductVisible === record.id}
             onCancel={() => setEditProductVisible(null)}
+            onUpdated={() => setEditProductVisible(null)}
           />
         </>
       ),

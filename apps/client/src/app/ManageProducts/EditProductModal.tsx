@@ -30,7 +30,8 @@ const EditProductModal: FC<{
   product: IProduct;
   visible: boolean;
   onCancel: any;
-}> = ({ product, visible, onCancel }): JSX.Element => {
+  onUpdated: any;
+}> = ({ product, visible, onCancel, onUpdated }): JSX.Element => {
   const user = getUser();
   const [editProductForm] = Form.useForm();
   const [postUpdateProduct] = useMutation(UPDATE_PRODUCT);
@@ -47,6 +48,8 @@ const EditProductModal: FC<{
         content: 'Success! Product updated!',
         okText: 'OK',
       });
+
+      onUpdated();
     } catch (e: any) {
       message.error(e.message);
     }
