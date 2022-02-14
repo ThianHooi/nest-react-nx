@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_PRODUCT } from './CreateProductMutation';
 
 import { message, Modal, Form, Input, Switch, InputNumber } from 'antd';
 import { getUser } from '../../util/authService';
