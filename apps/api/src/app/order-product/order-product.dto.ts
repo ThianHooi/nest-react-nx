@@ -1,16 +1,21 @@
 import {
   FilterableField,
   IDField,
+  PagingStrategies,
+  QueryOptions,
   Relation,
 } from '@nestjs-query/query-graphql';
 import { ObjectType, GraphQLISODateTime, Field, ID } from '@nestjs/graphql';
 import { OrderDto } from '../order/order.dto';
 import { ProductDto } from '../product/product.dto';
 
-
 @ObjectType('OrderProduct')
 @Relation('productId', () => ProductDto, { disableRemove: true })
 @Relation('orderId', () => OrderDto, { disableRemove: true })
+@QueryOptions({
+  enableTotalCount: true,
+  pagingStrategy: PagingStrategies.OFFSET,
+})
 export class OrderProductDto {
   @IDField(() => ID)
   id!: number;
