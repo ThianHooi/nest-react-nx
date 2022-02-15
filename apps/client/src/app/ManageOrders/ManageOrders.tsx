@@ -1,18 +1,12 @@
 import { FC, CSSProperties, useState, useEffect } from 'react';
 
-import {
-  EditOutlined,
-  EyeOutlined,
-  FileImageOutlined,
-  PlusCircleOutlined,
-} from '@ant-design/icons';
-import { Button, Col, Row, Space, Table, Tooltip } from 'antd';
+import { FileImageOutlined } from '@ant-design/icons';
+import { Table, Tooltip } from 'antd';
 import { useOrdersQuery } from '../../generated/graphql';
 import {
   IOffsetPageInfo,
   IOrder,
   IQueryProduct,
-  IUser,
 } from '../../interfaces/interfaces';
 
 const centerStyle: CSSProperties = {
@@ -74,21 +68,84 @@ const ManageOrders: FC = (): JSX.Element => {
       ),
     },
     {
-      title: 'Total Price',
-      dataIndex: 'price',
-      key: 'totalPrice',
-    },
-    {
       title: 'Total Item',
       dataIndex: 'orderProducts',
       key: 'orderProducts',
       render: (orderProducts: any) => orderProducts.length || 0,
+    },
+    {
+      title: 'Total Price',
+      dataIndex: 'price',
+      key: 'totalPrice',
+      render: (txt: number) => txt.toFixed(2),
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (txt: string) => txt.charAt(0).toUpperCase() + txt.slice(1),
     },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPaginationInfo({ currentPage: page });
     setSearchParams({ ...searchParams, offset: (page - 1) * pageSize });
+  };
+
+  const expandedRowRender = ({ orderProducts }: IOrder) => {
+    const orderProductsColumns = [
+      {
+        title: 'Thumbnail',
+        dataIndex: ['productId', 'imageUrl'],
+        key: 'imageUrl',
+        render: (imgurl: string) => {
+          return (
+            <div style={centerStyle}>
+              {imgurl ? (
+                <img
+                  style={{ maxHeight: 45, width: 'auto' }}
+                  src={imgurl}
+                  alt="Video Thumbnail"
+                />
+              ) : (
+                <FileImageOutlined style={{ fontSize: '32px' }} />
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        title: 'Product',
+        dataIndex: ['productId', 'name'],
+        key: 'product-name',
+      },
+      {
+        title: 'Product Price',
+        dataIndex: ['productId', 'price'],
+        key: 'product-price',
+        render: (txt: number) => txt.toFixed(2),
+      },
+      {
+        title: 'Order Quantity',
+        dataIndex: 'quantity',
+        key: 'product-quantity',
+      },
+      {
+        title: 'Order Price',
+        dataIndex: 'totalPrice',
+        key: 'product-totalPrice',
+        render: (txt: number) => txt.toFixed(2),
+      },
+    ];
+
+    return (
+      <Table
+        bordered
+        columns={orderProductsColumns}
+        dataSource={orderProducts}
+        pagination={false}
+      />
+    );
   };
 
   return (
@@ -107,6 +164,7 @@ const ManageOrders: FC = (): JSX.Element => {
           showTotal: (total, range) =>
             `${range[0]}-${range[1]} of ${total} items`,
         }}
+        expandable={{ expandedRowRender }}
       />
     </>
   );
