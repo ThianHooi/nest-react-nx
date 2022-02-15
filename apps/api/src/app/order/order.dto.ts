@@ -29,7 +29,7 @@ export class OrderDto {
   @FilterableField()
   user!: number;
 
-  @Field()
+  @FilterableField()
   price: number;
 
   @Field(() => GraphQLISODateTime)

@@ -8,6 +8,7 @@ import { OrderService } from './order.service';
 
 @Resolver(() => OrderDto)
 export class OrderResolver extends CRUDResolver(OrderDto, {
+  enableAggregate: true,
   create: { one: { disabled: true } },
   update: { one: { disabled: true }, many: { disabled: true } },
   delete: { one: { disabled: true }, many: { disabled: true } },
