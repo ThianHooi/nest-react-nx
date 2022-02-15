@@ -12,6 +12,7 @@ export const QUERY_SELLER_ORDER = gql`
         id
         price
         created
+        status
         user {
           id
           name

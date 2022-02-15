@@ -74,6 +74,7 @@ export interface IOrder {
   id: string;
   price: number;
   created: any;
+  status: string;
   user: { __typename?: 'User'; id: string; name: string; email: string };
   orderProducts: Array<{
     __typename?: 'OrderProduct';
