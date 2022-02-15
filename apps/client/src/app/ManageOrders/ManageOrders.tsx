@@ -1,11 +1,12 @@
 import { FC, CSSProperties, useState, useEffect } from 'react';
 
 import { FileImageOutlined } from '@ant-design/icons';
-import { Table, Tooltip } from 'antd';
+import { Table, Tooltip, Tag } from 'antd';
 import { useOrdersQuery } from '../../generated/graphql';
 import {
   IOffsetPageInfo,
   IOrder,
+  IOrderStatus,
   IQueryProduct,
 } from '../../interfaces/interfaces';
 
@@ -20,6 +21,29 @@ const defaultPaginationInfo: IOffsetPageInfo = {
   hasPreviousPage: false,
   totalCount: 0,
   currentPage: 1,
+};
+
+const renderStatusBadge = (status: string) => {
+  const orderStatus: IOrderStatus[] = [
+    {
+      type: 'created',
+      color: 'blue',
+    },
+    {
+      type: 'completed',
+      color: 'green',
+    },
+    {
+      type: 'cancelled',
+      color: 'red',
+    },
+  ];
+
+  const statusObj: IOrderStatus = orderStatus.find(
+    (x) => x.type === status
+  ) || { type: status, color: 'yellow' };
+
+  return <Tag color={statusObj.color}>{statusObj.type.toUpperCase()}</Tag>;
 };
 
 const ManageOrders: FC = (): JSX.Element => {
@@ -83,7 +107,7 @@ const ManageOrders: FC = (): JSX.Element => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (txt: string) => txt.charAt(0).toUpperCase() + txt.slice(1),
+      render: (txt: string) => renderStatusBadge(txt),
     },
   ];
 

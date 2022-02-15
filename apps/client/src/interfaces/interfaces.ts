@@ -100,3 +100,8 @@ export interface IUser {
   name: string;
   email: string;
 }
+
+export interface IOrderStatus {
+  type: string;
+  color: string;
+}
