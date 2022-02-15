@@ -9,6 +9,7 @@ import {
   IOrderStatus,
   IQueryProduct,
 } from '../../interfaces/interfaces';
+import OrderStatsCards from './OrderStatsCards';
 
 const centerStyle: CSSProperties = {
   display: 'flex',
@@ -175,6 +176,7 @@ const ManageOrders: FC = (): JSX.Element => {
   return (
     <>
       <h1>Manage Orders</h1>
+      <OrderStatsCards />
       <Table
         loading={loading}
         tableLayout={'fixed'}
