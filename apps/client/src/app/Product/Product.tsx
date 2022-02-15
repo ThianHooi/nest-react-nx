@@ -24,6 +24,10 @@ const Product: FC = (): JSX.Element => {
     },
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [productId]);
+
   const centerStyle: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
