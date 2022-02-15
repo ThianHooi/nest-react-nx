@@ -105,3 +105,18 @@ export interface IOrderStatus {
   type: string;
   color: string;
 }
+
+export interface IOrderAggregate {
+  __typename?: 'Query';
+  orderAggregate: Array<{
+    __typename?: 'OrderAggregateResponse';
+    sum?:
+      | { __typename?: 'OrderSumAggregate'; price?: number | null | undefined }
+      | null
+      | undefined;
+    count?:
+      | { __typename?: 'OrderCountAggregate'; id?: number | null | undefined }
+      | null
+      | undefined;
+  }>;
+}

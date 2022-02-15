@@ -289,6 +289,7 @@ export type Order = {
   created: Scalars['DateTime'];
   id: Scalars['ID'];
   orderProducts: Array<OrderProduct>;
+  orderProductsAggregate: Array<OrderOrderProductsAggregateResponse>;
   price: Scalars['Float'];
   status: Scalars['String'];
   updated: Scalars['DateTime'];
@@ -301,16 +302,42 @@ export type OrderOrderProductsArgs = {
   sorting?: InputMaybe<Array<OrderProductSort>>;
 };
 
+
+export type OrderOrderProductsAggregateArgs = {
+  filter?: InputMaybe<OrderProductAggregateFilter>;
+};
+
+export type OrderAggregateFilter = {
+  and?: InputMaybe<Array<OrderAggregateFilter>>;
+  id?: InputMaybe<IdFilterComparison>;
+  or?: InputMaybe<Array<OrderAggregateFilter>>;
+  price?: InputMaybe<NumberFieldComparison>;
+  status?: InputMaybe<StringFieldComparison>;
+  user?: InputMaybe<NumberFieldComparison>;
+};
+
 export type OrderAggregateGroupBy = {
   __typename?: 'OrderAggregateGroupBy';
   id?: Maybe<Scalars['ID']>;
+  price?: Maybe<Scalars['Float']>;
   status?: Maybe<Scalars['String']>;
   user?: Maybe<Scalars['Float']>;
+};
+
+export type OrderAggregateResponse = {
+  __typename?: 'OrderAggregateResponse';
+  avg?: Maybe<OrderAvgAggregate>;
+  count?: Maybe<OrderCountAggregate>;
+  groupBy?: Maybe<OrderAggregateGroupBy>;
+  max?: Maybe<OrderMaxAggregate>;
+  min?: Maybe<OrderMinAggregate>;
+  sum?: Maybe<OrderSumAggregate>;
 };
 
 export type OrderAvgAggregate = {
   __typename?: 'OrderAvgAggregate';
   id?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
   user?: Maybe<Scalars['Float']>;
 };
 
@@ -327,6 +354,7 @@ export type OrderConnection = {
 export type OrderCountAggregate = {
   __typename?: 'OrderCountAggregate';
   id?: Maybe<Scalars['Int']>;
+  price?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   user?: Maybe<Scalars['Int']>;
 };
@@ -336,6 +364,7 @@ export type OrderFilter = {
   id?: InputMaybe<IdFilterComparison>;
   or?: InputMaybe<Array<OrderFilter>>;
   orderProducts?: InputMaybe<OrderFilterOrderProductFilter>;
+  price?: InputMaybe<NumberFieldComparison>;
   status?: InputMaybe<StringFieldComparison>;
   user?: InputMaybe<NumberFieldComparison>;
 };
@@ -359,6 +388,7 @@ export type OrderInputDto = {
 export type OrderMaxAggregate = {
   __typename?: 'OrderMaxAggregate';
   id?: Maybe<Scalars['ID']>;
+  price?: Maybe<Scalars['Float']>;
   status?: Maybe<Scalars['String']>;
   user?: Maybe<Scalars['Float']>;
 };
@@ -366,8 +396,79 @@ export type OrderMaxAggregate = {
 export type OrderMinAggregate = {
   __typename?: 'OrderMinAggregate';
   id?: Maybe<Scalars['ID']>;
+  price?: Maybe<Scalars['Float']>;
   status?: Maybe<Scalars['String']>;
   user?: Maybe<Scalars['Float']>;
+};
+
+export type OrderOrderProductsAggregateGroupBy = {
+  __typename?: 'OrderOrderProductsAggregateGroupBy';
+  id?: Maybe<Scalars['ID']>;
+  orderId?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  totalPrice?: Maybe<Scalars['Float']>;
+  unitPrice?: Maybe<Scalars['Float']>;
+};
+
+export type OrderOrderProductsAggregateResponse = {
+  __typename?: 'OrderOrderProductsAggregateResponse';
+  avg?: Maybe<OrderOrderProductsAvgAggregate>;
+  count?: Maybe<OrderOrderProductsCountAggregate>;
+  groupBy?: Maybe<OrderOrderProductsAggregateGroupBy>;
+  max?: Maybe<OrderOrderProductsMaxAggregate>;
+  min?: Maybe<OrderOrderProductsMinAggregate>;
+  sum?: Maybe<OrderOrderProductsSumAggregate>;
+};
+
+export type OrderOrderProductsAvgAggregate = {
+  __typename?: 'OrderOrderProductsAvgAggregate';
+  id?: Maybe<Scalars['Float']>;
+  orderId?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  totalPrice?: Maybe<Scalars['Float']>;
+  unitPrice?: Maybe<Scalars['Float']>;
+};
+
+export type OrderOrderProductsCountAggregate = {
+  __typename?: 'OrderOrderProductsCountAggregate';
+  id?: Maybe<Scalars['Int']>;
+  orderId?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['Int']>;
+  quantity?: Maybe<Scalars['Int']>;
+  totalPrice?: Maybe<Scalars['Int']>;
+  unitPrice?: Maybe<Scalars['Int']>;
+};
+
+export type OrderOrderProductsMaxAggregate = {
+  __typename?: 'OrderOrderProductsMaxAggregate';
+  id?: Maybe<Scalars['ID']>;
+  orderId?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  totalPrice?: Maybe<Scalars['Float']>;
+  unitPrice?: Maybe<Scalars['Float']>;
+};
+
+export type OrderOrderProductsMinAggregate = {
+  __typename?: 'OrderOrderProductsMinAggregate';
+  id?: Maybe<Scalars['ID']>;
+  orderId?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  totalPrice?: Maybe<Scalars['Float']>;
+  unitPrice?: Maybe<Scalars['Float']>;
+};
+
+export type OrderOrderProductsSumAggregate = {
+  __typename?: 'OrderOrderProductsSumAggregate';
+  id?: Maybe<Scalars['Float']>;
+  orderId?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['Float']>;
+  quantity?: Maybe<Scalars['Float']>;
+  totalPrice?: Maybe<Scalars['Float']>;
+  unitPrice?: Maybe<Scalars['Float']>;
 };
 
 export type OrderProduct = {
@@ -514,6 +615,7 @@ export type OrderSort = {
 
 export enum OrderSortFields {
   Id = 'id',
+  Price = 'price',
   Status = 'status',
   User = 'user'
 }
@@ -521,6 +623,7 @@ export enum OrderSortFields {
 export type OrderSumAggregate = {
   __typename?: 'OrderSumAggregate';
   id?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
   user?: Maybe<Scalars['Float']>;
 };
 
@@ -653,6 +756,7 @@ export type ProductSumAggregate = {
 export type Query = {
   __typename?: 'Query';
   order?: Maybe<Order>;
+  orderAggregate: Array<OrderAggregateResponse>;
   orderProduct?: Maybe<OrderProduct>;
   orderProductAggregate: Array<OrderProductAggregateResponse>;
   orderProducts: OrderProductConnection;
@@ -666,6 +770,11 @@ export type Query = {
 
 export type QueryOrderArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryOrderAggregateArgs = {
+  filter?: InputMaybe<OrderAggregateFilter>;
 };
 
 
@@ -978,6 +1087,11 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', access_token: string, user: { __typename?: 'User', id: string, name: string, role: string } } };
 
+export type OrderAggregateQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OrderAggregateQuery = { __typename?: 'Query', orderAggregate: Array<{ __typename?: 'OrderAggregateResponse', sum?: { __typename?: 'OrderSumAggregate', price?: number | null | undefined } | null | undefined, count?: { __typename?: 'OrderCountAggregate', id?: number | null | undefined } | null | undefined }> };
+
 export type OrdersQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
 }>;
@@ -1124,6 +1238,45 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const OrderAggregateDocument = gql`
+    query orderAggregate {
+  orderAggregate {
+    sum {
+      price
+    }
+    count {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useOrderAggregateQuery__
+ *
+ * To run a query within a React component, call `useOrderAggregateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderAggregateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderAggregateQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOrderAggregateQuery(baseOptions?: Apollo.QueryHookOptions<OrderAggregateQuery, OrderAggregateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OrderAggregateQuery, OrderAggregateQueryVariables>(OrderAggregateDocument, options);
+      }
+export function useOrderAggregateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OrderAggregateQuery, OrderAggregateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OrderAggregateQuery, OrderAggregateQueryVariables>(OrderAggregateDocument, options);
+        }
+export type OrderAggregateQueryHookResult = ReturnType<typeof useOrderAggregateQuery>;
+export type OrderAggregateLazyQueryHookResult = ReturnType<typeof useOrderAggregateLazyQuery>;
+export type OrderAggregateQueryResult = Apollo.QueryResult<OrderAggregateQuery, OrderAggregateQueryVariables>;
 export const OrdersDocument = gql`
     query orders($offset: Int) {
   orders(paging: {limit: 10, offset: $offset}) {
